@@ -497,6 +497,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/cookie@npm:^9.0.4":
+  version: 9.4.0
+  resolution: "@fastify/cookie@npm:9.4.0"
+  dependencies:
+    cookie-signature: "npm:^1.1.0"
+    fastify-plugin: "npm:^4.0.0"
+  checksum: 10c0/24d2fd4648fc28078c793dc862c53c7f3b356813e5482058b004e6c3733fd2ea432fc5e123ffb77d767b833f8c177501f2c45eda5d5d01bd6ed7040d3e3fd9b6
+  languageName: node
+  linkType: hard
+
 "@fastify/cors@npm:9.0.1":
   version: 9.0.1
   resolution: "@fastify/cors@npm:9.0.1"
@@ -551,6 +561,19 @@ __metadata:
     path-to-regexp: "npm:^6.1.0"
     reusify: "npm:^1.0.4"
   checksum: 10c0/6ee8a09bd9ff3d7ba1fe46a838104cea6b79a31511fd331a5f68401b48f325c343726a9f25a0410c668a6193b5b82e0011e5847c2e51d4a97e0dc1d5633eade1
+  languageName: node
+  linkType: hard
+
+"@fastify/secure-session@npm:^7.5.1":
+  version: 7.5.1
+  resolution: "@fastify/secure-session@npm:7.5.1"
+  dependencies:
+    "@fastify/cookie": "npm:^9.0.4"
+    fastify-plugin: "npm:^4.0.0"
+    sodium-native: "npm:^4.0.0"
+  bin:
+    secure-session: genkey.js
+  checksum: 10c0/8995d585c705700c55c21d7e86e1bccf722b9b7d594797b0fbe2c428a5fa583673185ed9a61ef8f4154d889b30d776fb7d7ad7373be47a5e8fd74d3fdedccfd3
   languageName: node
   linkType: hard
 
@@ -1622,6 +1645,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/speakeasy@npm:^2":
+  version: 2.0.10
+  resolution: "@types/speakeasy@npm:2.0.10"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/4a9304373a4fe5b7931409384fd948c1ff3ae4cb0b2f5a69f407852f2e3186c4276c969292c634ea722bab859e84cdaf7d006588ce8a3c48ee4199b2deb2dc08
+  languageName: node
+  linkType: hard
+
 "@types/stack-utils@npm:^2.0.0":
   version: 2.0.3
   resolution: "@types/stack-utils@npm:2.0.3"
@@ -2298,6 +2330,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.6.2":
+  version: 1.7.4
+  resolution: "axios@npm:1.7.4"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10c0/5ea1a93140ca1d49db25ef8e1bd8cfc59da6f9220159a944168860ad15a2743ea21c5df2967795acb15cbe81362f5b157fdebbea39d53117ca27658bab9f7f17
+  languageName: node
+  linkType: hard
+
 "babel-jest@npm:^29.7.0":
   version: 29.7.0
   resolution: "babel-jest@npm:29.7.0"
@@ -2378,6 +2421,13 @@ __metadata:
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
   checksum: 10c0/9308baf0a7e4838a82bbfd11e01b1cb0f0cf2893bc1676c27c2a8c0e70cbae1c59120c3268517a8ae7fb6376b4639ef81ca22582611dbee4ed28df945134aaee
+  languageName: node
+  linkType: hard
+
+"base32.js@npm:0.0.1":
+  version: 0.0.1
+  resolution: "base32.js@npm:0.0.1"
+  checksum: 10c0/bea4a63d7f19d55487b487edeb674c06afc6209cafd497a611f65f2483ec48df72c55bb47555c9d03080c4e468d2cd4f26b2d49b36959a1cc30e37a3923bd79e
   languageName: node
   linkType: hard
 
@@ -2524,6 +2574,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bursary-form-system-backend@workspace:."
   dependencies:
+    "@fastify/secure-session": "npm:^7.5.1"
     "@fastify/static": "npm:^7.0.4"
     "@nestjs/cli": "npm:^10.0.0"
     "@nestjs/common": "npm:^10.0.0"
@@ -2543,6 +2594,7 @@ __metadata:
     "@types/passport": "npm:^0"
     "@types/passport-google-oauth2": "npm:^0"
     "@types/pg": "npm:^8"
+    "@types/speakeasy": "npm:^2"
     "@types/supertest": "npm:^6.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^6.0.0"
     "@typescript-eslint/parser": "npm:^6.0.0"
@@ -2556,7 +2608,9 @@ __metadata:
     prettier: "npm:^3.0.0"
     reflect-metadata: "npm:^0.2.0"
     rxjs: "npm:^7.8.1"
+    smtpexpress: "npm:^0.0.14"
     source-map-support: "npm:^0.5.21"
+    speakeasy: "npm:^2.0.0"
     supertest: "npm:^6.3.3"
     ts-jest: "npm:^29.1.0"
     ts-loader: "npm:^9.4.3"
@@ -2970,6 +3024,13 @@ __metadata:
   version: 1.0.6
   resolution: "cookie-signature@npm:1.0.6"
   checksum: 10c0/b36fd0d4e3fef8456915fcf7742e58fbfcc12a17a018e0eb9501c9d5ef6893b596466f03b0564b81af29ff2538fd0aa4b9d54fe5ccbfb4c90ea50ad29fe2d221
+  languageName: node
+  linkType: hard
+
+"cookie-signature@npm:^1.1.0":
+  version: 1.2.1
+  resolution: "cookie-signature@npm:1.2.1"
+  checksum: 10c0/1f71acf64931d7e7684aa228a0dad70162f6993b65b2957e076833cbd6f9a2f507b8d731b15e3895dce0e7ba4c63551f4686d1a3120199fe28060c41fd493a73
   languageName: node
   linkType: hard
 
@@ -3908,6 +3969,16 @@ __metadata:
   version: 3.3.1
   resolution: "flatted@npm:3.3.1"
   checksum: 10c0/324166b125ee07d4ca9bcf3a5f98d915d5db4f39d711fba640a3178b959919aae1f7cfd8aabcfef5826ed8aa8a2aa14cc85b2d7d18ff638ddf4ae3df39573eaf
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.15.6":
+  version: 1.15.6
+  resolution: "follow-redirects@npm:1.15.6"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 10c0/9ff767f0d7be6aa6870c82ac79cf0368cd73e01bbc00e9eb1c2a16fbb198ec105e3c9b6628bb98e9f3ac66fe29a957b9645bcb9a490bb7aa0d35f908b6b85071
   languageName: node
   linkType: hard
 
@@ -5835,6 +5906,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-gyp-build@npm:^4.8.0":
+  version: 4.8.1
+  resolution: "node-gyp-build@npm:4.8.1"
+  bin:
+    node-gyp-build: bin.js
+    node-gyp-build-optional: optional.js
+    node-gyp-build-test: build-test.js
+  checksum: 10c0/e36ca3d2adf2b9cca316695d7687207c19ac6ed326d6d7c68d7112cebe0de4f82d6733dff139132539fcc01cf5761f6c9082a21864ab9172edf84282bc849ce7
+  languageName: node
+  linkType: hard
+
 "node-gyp@npm:latest":
   version: 10.2.0
   resolution: "node-gyp@npm:10.2.0"
@@ -6579,6 +6661,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: 10c0/fe7dd8b1bdbbbea18d1459107729c3e4a2243ca870d26d34c2c1bcd3e4425b7bcc5112362df2d93cc7fb9746f6142b5e272fd1cc5c86ddf8580175186f6ad42b
+  languageName: node
+  linkType: hard
+
 "punycode@npm:^2.1.0":
   version: 2.3.1
   resolution: "punycode@npm:2.3.1"
@@ -7098,6 +7187,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"smtpexpress@npm:^0.0.14":
+  version: 0.0.14
+  resolution: "smtpexpress@npm:0.0.14"
+  dependencies:
+    axios: "npm:^1.6.2"
+  checksum: 10c0/65d94a4c0cc3d372d8916ca8c4402ae4f663de9d496e40811a1abbc4ccd6f42a1be51de8436422b69610bb419467fb676a9ac3fc5d075012010c01656674877f
+  languageName: node
+  linkType: hard
+
 "socks-proxy-agent@npm:^8.0.3":
   version: 8.0.4
   resolution: "socks-proxy-agent@npm:8.0.4"
@@ -7116,6 +7214,16 @@ __metadata:
     ip-address: "npm:^9.0.5"
     smart-buffer: "npm:^4.2.0"
   checksum: 10c0/d54a52bf9325165770b674a67241143a3d8b4e4c8884560c4e0e078aace2a728dffc7f70150660f51b85797c4e1a3b82f9b7aa25e0a0ceae1a243365da5c51a7
+  languageName: node
+  linkType: hard
+
+"sodium-native@npm:^4.0.0":
+  version: 4.1.1
+  resolution: "sodium-native@npm:4.1.1"
+  dependencies:
+    node-gyp: "npm:latest"
+    node-gyp-build: "npm:^4.8.0"
+  checksum: 10c0/7687554fc224bcd350a3b695de792d21b0c374d116d82306f16b5ff674c58f5f397667a1c977dd7e14bde2de4657b8bcd0bdd7cf435eb55173380c825754793f
   languageName: node
   linkType: hard
 
@@ -7159,6 +7267,15 @@ __metadata:
   version: 0.6.1
   resolution: "source-map@npm:0.6.1"
   checksum: 10c0/ab55398007c5e5532957cb0beee2368529618ac0ab372d789806f5718123cc4367d57de3904b4e6a4170eb5a0b0f41373066d02ca0735a0c4d75c7d328d3e011
+  languageName: node
+  linkType: hard
+
+"speakeasy@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "speakeasy@npm:2.0.0"
+  dependencies:
+    base32.js: "npm:0.0.1"
+  checksum: 10c0/14dfc1e3dfc3e3e4ebe62a08cbea7cfc97b7ca79984b9ad8246cb2f994eab1d38b2e6e7cc6ce719210cf57b175dfec1602b87205c3db5f14aca751f62448dd51
   languageName: node
   linkType: hard
 
