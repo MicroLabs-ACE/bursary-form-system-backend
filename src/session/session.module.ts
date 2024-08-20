@@ -3,5 +3,6 @@ import { SessionService } from './session.service';
 
 @Module({
   providers: [SessionService],
+  exports: [SessionService],
 })
 export class SessionModule {}

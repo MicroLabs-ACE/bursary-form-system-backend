@@ -26,8 +26,8 @@ export class AuthController {
 
   @Get('google-oauth2/callback')
   @UseGuards(GoogleOauth2Guard)
-  async googleOauth2Callback(@Req() req: any) {
-    const { email } = req.user;
+  async googleOauth2Callback(@Req() request: any, @Res() reply: any) {
+    reply.status(200).redirect('/login');
   }
 
   @Post('send-otp')

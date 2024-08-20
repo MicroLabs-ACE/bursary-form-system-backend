@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { MailingModule } from './mailing/mailing.module';
 import { SessionModule } from './session/session.module';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
@@ -33,4 +34,6 @@ import { SessionModule } from './session/session.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
