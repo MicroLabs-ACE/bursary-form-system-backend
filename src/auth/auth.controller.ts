@@ -10,7 +10,6 @@ import {
 import { AuthService } from './auth.service';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { Request, Response } from 'express';
-import { AuthGuard } from '@nestjs/passport';
 import { GoogleOauth2Guard } from './google-oauth2.guard';
 
 @Controller('auth')
@@ -23,11 +22,8 @@ export class AuthController {
 
   @Get('google-oauth2/callback')
   @UseGuards(GoogleOauth2Guard)
-  async googleOauth2Callback(
-    @Req() request: Request,
-    @Res() response: Response,
-  ) {
-    response.json({ message: request.user });
+  async googleOauth2Callback(@Req() request: Request) {
+    return await this.authService.login(request.user);
   }
 
   @Post('send-otp')

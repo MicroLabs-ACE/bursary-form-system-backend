@@ -5,15 +5,20 @@ import { MailingService } from '../mailing/mailing.service';
 import { MailDto, MailTemplate } from '../mailing/dto/mail.dto';
 import { OtpDto } from '../mailing/dto/otp.dto';
 import { User } from '../entity/user.entity';
-import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
     private readonly mailingService: MailingService,
-    private readonly configService: ConfigService,
+    private readonly jwtService: JwtService,
   ) {}
+
+  async login(user: User) {
+    const payload = { id: user.id, email: user.email };
+    return { accessToken: await this.jwtService.signAsync(payload) };
+  }
 
   async sendOtp(email: string) {
     const foundUser = await this.usersRepository.findOneBy({ email });
@@ -40,6 +45,7 @@ export class AuthService {
     if (!isValid) {
       throw new BadRequestException('Invalid OTP');
     }
-    return isValid;
+
+    return await this.login(foundUser);
   }
 }
