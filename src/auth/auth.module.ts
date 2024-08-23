@@ -4,11 +4,11 @@ import { AuthController } from './auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { MailingModule } from 'src/mailing/mailing.module';
-import { SessionModule } from 'src/session/session.module';
+import { GoogleOauth2Strategy } from './google-oauth2.strategy';
 
 @Module({
-  imports: [MailingModule, SessionModule, TypeOrmModule.forFeature([User])],
+  imports: [MailingModule, TypeOrmModule.forFeature([User])],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, GoogleOauth2Strategy],
 })
 export class AuthModule {}

@@ -9,25 +9,25 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { Request, Response } from 'express';
+import { AuthGuard } from '@nestjs/passport';
 import { GoogleOauth2Guard } from './google-oauth2.guard';
-import { SessionService } from '../session/session.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly sessionService: SessionService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Get('google-oauth2')
   @UseGuards(GoogleOauth2Guard)
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   async googleOauth2() {}
 
   @Get('google-oauth2/callback')
   @UseGuards(GoogleOauth2Guard)
-  async googleOauth2Callback(@Req() request: any, @Res() reply: any) {
-    reply.status(200).redirect('/login');
+  async googleOauth2Callback(
+    @Req() request: Request,
+    @Res() response: Response,
+  ) {
+    response.json({ message: request.user });
   }
 
   @Post('send-otp')
@@ -39,20 +39,5 @@ export class AuthController {
   async verifyOtp(@Body() verifyOtpDto: VerifyOtpDto) {
     const { email, otp } = verifyOtpDto;
     await this.authService.verifyOtp(email, otp);
-  }
-
-  @Get('login')
-  async login(@Req() request: any, @Res() reply: any) {
-    await this.sessionService.setSessionData(
-      request,
-      reply,
-      'user',
-      request.user,
-    );
-  }
-
-  @Get('session')
-  async session(@Req() request: any) {
-    await this.sessionService.getSessionData(request, 'user');
   }
 }

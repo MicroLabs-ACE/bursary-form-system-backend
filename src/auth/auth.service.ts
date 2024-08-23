@@ -5,12 +5,14 @@ import { MailingService } from '../mailing/mailing.service';
 import { MailDto, MailTemplate } from '../mailing/dto/mail.dto';
 import { OtpDto } from '../mailing/dto/otp.dto';
 import { User } from '../entity/user.entity';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
     private readonly mailingService: MailingService,
+    private readonly configService: ConfigService,
   ) {}
 
   async sendOtp(email: string) {

@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { MailingModule } from './mailing/mailing.module';
-import { SessionModule } from './session/session.module';
 import { DataSource } from 'typeorm';
 
 @Module({
@@ -29,7 +28,6 @@ import { DataSource } from 'typeorm';
     }),
     AuthModule,
     MailingModule,
-    SessionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
