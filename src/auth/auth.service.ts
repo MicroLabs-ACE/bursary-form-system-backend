@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -11,13 +12,34 @@ import { MailingService } from '../mailing/mailing.service';
 export class AuthService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
+    private readonly configService: ConfigService,
     private readonly mailingService: MailingService,
     private readonly jwtService: JwtService,
   ) {}
 
+  async generateAccessToken(payload: any) {
+    const accessToken = await this.jwtService.signAsync(payload, {
+      secret: this.configService.get<string>('ACCESS_TOKEN_SECRET'),
+      expiresIn: this.configService.get<number>('ACCESS_TOKEN_DURATION'),
+    });
+
+    return accessToken;
+  }
+
+  async generateRefreshToken(payload: any) {
+    const refreshToken = await this.jwtService.signAsync(payload, {
+      secret: this.configService.get<string>('REFRESH_TOKEN_SECRET'),
+      expiresIn: this.configService.get<number>('REFRESH_TOKEN_DURATION'),
+    });
+
+    return refreshToken;
+  }
+
   async login(user: User) {
-    const payload = { id: user.id, email: user.email };
-    return { accessToken: await this.jwtService.signAsync(payload) };
+    const payload = { sub: user.id, email: user.email };
+    const accessToken = await this.generateAccessToken(payload);
+    const refreshToken = await this.generateRefreshToken(payload);
+    return { accessToken, refreshToken };
   }
 
   async requestOtp(email: string) {

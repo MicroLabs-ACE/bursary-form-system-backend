@@ -59,8 +59,9 @@ export class AuthController {
   async mockVerifyOtp(@Body() body: any, @Res() response: Response) {
     const { email, token, secret } = body;
     const user = await this.authService.mockVerifyOtp(email, token, secret);
-    const { accessToken } = await this.authService.login(user);
+    const { accessToken, refreshToken } = await this.authService.login(user);
     response.cookie('access_token', accessToken);
+    response.cookie('refresh_token', refreshToken);
     response.status(200).json({ message: 'Logged in successfully' });
   }
 
