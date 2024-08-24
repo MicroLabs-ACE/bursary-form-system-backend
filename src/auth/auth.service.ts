@@ -20,7 +20,7 @@ export class AuthService {
     return { accessToken: await this.jwtService.signAsync(payload) };
   }
 
-  async sendOtp(email: string) {
+  async requestOtp(email: string) {
     const foundUser = await this.usersRepository.findOneBy({ email });
     if (!foundUser) {
       throw new BadRequestException('User does not exist');
@@ -38,6 +38,18 @@ export class AuthService {
     await this.mailingService.sendEmail(mailDto);
   }
 
+  async mockRequestOtp(email: string) {
+    const otpDto: OtpDto = await this.mailingService.generateOtp();
+    const mailDto: MailDto = {
+      name: `Victor Momodu`,
+      contact: email,
+      message: otpDto.token,
+      template: MailTemplate.EMAIL_OTP_LOGIN,
+    };
+    await this.mailingService.sendEmail(mailDto);
+    return otpDto;
+  }
+
   async verifyOtp(email: string, token: string) {
     const foundUser = await this.usersRepository.findOneBy({ email });
     const otpDto: OtpDto = { token, secret: foundUser.secret };
@@ -46,6 +58,22 @@ export class AuthService {
       throw new BadRequestException('Invalid OTP');
     }
 
-    return await this.login(foundUser);
+    return foundUser;
+  }
+
+  async mockVerifyOtp(email: string, token: string, secret: string) {
+    const otpDto: OtpDto = { token, secret };
+    const isValid = await this.mailingService.validateOtp(otpDto);
+    if (!isValid) {
+      throw new BadRequestException('Invalid OTP');
+    }
+
+    return {
+      id: 1,
+      email,
+      firstName: 'Victor',
+      lastName: 'Momodu',
+      secret,
+    };
   }
 }

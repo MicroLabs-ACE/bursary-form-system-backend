@@ -11,29 +11,62 @@ import { AuthService } from './auth.service';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { Request, Response } from 'express';
 import { GoogleOauth2Guard } from './google-oauth2.guard';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get('google-oauth2')
+  @Get('google')
   @UseGuards(GoogleOauth2Guard)
   async googleOauth2() {}
 
-  @Get('google-oauth2/callback')
+  @Get('google/callback')
   @UseGuards(GoogleOauth2Guard)
-  async googleOauth2Callback(@Req() request: Request) {
-    return await this.authService.login(request.user);
+  async googleOauth2Callback(
+    @Req() request: Request,
+    @Res() response: Response,
+  ) {
+    const { user } = request;
+    const { accessToken } = await this.authService.login(user);
+    response.cookie('access_token', accessToken);
+    response.status(200).json({ message: 'Logged in successfully' });
   }
 
-  @Post('send-otp')
-  async sendOtp(@Body('email') email: string) {
-    await this.authService.sendOtp(email);
+  @Post('otp/request')
+  async requestOtp(@Body('email') email: string) {
+    await this.authService.requestOtp(email);
   }
 
-  @Post('verify-otp')
-  async verifyOtp(@Body() verifyOtpDto: VerifyOtpDto) {
+  @Post('otp/mrequest')
+  async mockRequestOtp(@Body('email') email: string) {
+    return await this.authService.mockRequestOtp(email);
+  }
+
+  @Post('otp/verify')
+  async verifyOtp(
+    @Body() verifyOtpDto: VerifyOtpDto,
+    @Res() response: Response,
+  ) {
     const { email, otp } = verifyOtpDto;
-    await this.authService.verifyOtp(email, otp);
+    const user = await this.authService.verifyOtp(email, otp);
+    const { accessToken } = await this.authService.login(user);
+    response.cookie('access_token', accessToken);
+    response.status(200).json({ message: 'Logged in successfully' });
+  }
+
+  @Post('otp/mverify')
+  async mockVerifyOtp(@Body() body: any, @Res() response: Response) {
+    const { email, token, secret } = body;
+    const user = await this.authService.mockVerifyOtp(email, token, secret);
+    const { accessToken } = await this.authService.login(user);
+    response.cookie('access_token', accessToken);
+    response.status(200).json({ message: 'Logged in successfully' });
+  }
+
+  @Get('dashboard')
+  @UseGuards(JwtAuthGuard)
+  async dashboard() {
+    return 'This is the dashboard';
   }
 }

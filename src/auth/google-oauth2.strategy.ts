@@ -28,11 +28,10 @@ export class GoogleOauth2Strategy extends PassportStrategy(Strategy, 'google') {
   ) {
     const { emails } = profile;
     const email = emails[0].value;
-    const foundUser = await this.usersRepository.findOneBy({ email });
-    if (!foundUser) {
+    const user = await this.usersRepository.findOneBy({ email });
+    if (!user) {
       throw new BadRequestException('User does not exist');
     }
-
-    done(null, foundUser);
+    done(null, user);
   }
 }
