@@ -7,9 +7,9 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
-import { Request, Response } from 'express';
 import { GoogleOauth2Guard } from './google-oauth2.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
 

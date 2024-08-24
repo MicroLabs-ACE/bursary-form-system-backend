@@ -2,8 +2,8 @@ import { Injectable, NotImplementedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createClient } from 'smtpexpress';
 import * as speakeasy from 'speakeasy';
-import { OtpDto } from './dto/otp.dto';
 import { MailDto, MailTemplate } from './dto/mail.dto';
+import { OtpDto } from './dto/otp.dto';
 
 @Injectable()
 export class MailingService {

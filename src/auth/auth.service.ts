@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { MailingService } from '../mailing/mailing.service';
+import { User } from '../entity/user.entity';
 import { MailDto, MailTemplate } from '../mailing/dto/mail.dto';
 import { OtpDto } from '../mailing/dto/otp.dto';
-import { User } from '../entity/user.entity';
-import { JwtService } from '@nestjs/jwt';
+import { MailingService } from '../mailing/mailing.service';
 
 @Injectable()
 export class AuthService {
