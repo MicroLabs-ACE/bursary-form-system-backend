@@ -1161,6 +1161,52 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/debug@npm:5.19.1":
+  version: 5.19.1
+  resolution: "@prisma/debug@npm:5.19.1"
+  checksum: 10c0/4b88719b9a0dd76692bec766fd8188b685a81f0459f3df8fb44b4c492b483a6aadaf7021f7aca90afa5a2f27d84d737a3f2d5abed5f9f818a640487f49d1b8c4
+  languageName: node
+  linkType: hard
+
+"@prisma/engines-version@npm:5.19.1-2.69d742ee20b815d88e17e54db4a2a7a3b30324e3":
+  version: 5.19.1-2.69d742ee20b815d88e17e54db4a2a7a3b30324e3
+  resolution: "@prisma/engines-version@npm:5.19.1-2.69d742ee20b815d88e17e54db4a2a7a3b30324e3"
+  checksum: 10c0/9bf4ad5b199054fe56a96ddbda1b835e7f103d690d2b7d04c159f29399261356516ec8881e8caf637bd4523395ccc4ce450013a0c9a8a3ffa16d2fc15b93bfa8
+  languageName: node
+  linkType: hard
+
+"@prisma/engines@npm:5.19.1":
+  version: 5.19.1
+  resolution: "@prisma/engines@npm:5.19.1"
+  dependencies:
+    "@prisma/debug": "npm:5.19.1"
+    "@prisma/engines-version": "npm:5.19.1-2.69d742ee20b815d88e17e54db4a2a7a3b30324e3"
+    "@prisma/fetch-engine": "npm:5.19.1"
+    "@prisma/get-platform": "npm:5.19.1"
+  checksum: 10c0/d12893935d842fea1c5344e3ab0f769b01ec1c71a91bec3ac9ceb58838fe7f745d226d5b8b9ac386ad503c56773272586bb73188d592ec8d4e05f43285009155
+  languageName: node
+  linkType: hard
+
+"@prisma/fetch-engine@npm:5.19.1":
+  version: 5.19.1
+  resolution: "@prisma/fetch-engine@npm:5.19.1"
+  dependencies:
+    "@prisma/debug": "npm:5.19.1"
+    "@prisma/engines-version": "npm:5.19.1-2.69d742ee20b815d88e17e54db4a2a7a3b30324e3"
+    "@prisma/get-platform": "npm:5.19.1"
+  checksum: 10c0/670d3f604549c4778d32febe56d948896b5c16dad5b51814c5b168a6007c9782d453cebee43cb81ddd58c9e9538811ea1a793516420ecf2c84ae4c3b4ed34f6c
+  languageName: node
+  linkType: hard
+
+"@prisma/get-platform@npm:5.19.1":
+  version: 5.19.1
+  resolution: "@prisma/get-platform@npm:5.19.1"
+  dependencies:
+    "@prisma/debug": "npm:5.19.1"
+  checksum: 10c0/a53b5c894cf4074af6164d9c503e387aba92c518ad7bad82be40f834a0030270c60f6149b20951c3e1db32bd836f582053e63c4bf7099461f0160dd5956f063e
+  languageName: node
+  linkType: hard
+
 "@sinclair/typebox@npm:^0.27.8":
   version: 0.27.8
   resolution: "@sinclair/typebox@npm:0.27.8"
@@ -1613,6 +1659,13 @@ __metadata:
     "@types/methods": "npm:^1.1.4"
     "@types/superagent": "npm:^8.1.0"
   checksum: 10c0/44a28f9b35b65800f4c7bcc23748e71c925098aa74ea504d14c98385c36d00de2a4f5aca15d7dc4514bc80533e0af21f985a4ab9f5f317c7266e9e75836aef39
+  languageName: node
+  linkType: hard
+
+"@types/validator@npm:^13.11.8":
+  version: 13.12.1
+  resolution: "@types/validator@npm:13.12.1"
+  checksum: 10c0/473b12e287f569e08741c24d4d91663e740ec6264032eeb311c21c8f00dfa274c6fe5af9190ffe1b4b527e95a1bb31c81598682d5dbd76e1604f898bc19adc2b
   languageName: node
   linkType: hard
 
@@ -2491,6 +2544,8 @@ __metadata:
     "@types/supertest": "npm:^6.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^6.0.0"
     "@typescript-eslint/parser": "npm:^6.0.0"
+    class-transformer: "npm:^0.5.1"
+    class-validator: "npm:^0.14.1"
     cookie-parser: "npm:^1.4.6"
     eslint: "npm:^8.42.0"
     eslint-config-prettier: "npm:^9.0.0"
@@ -2502,6 +2557,7 @@ __metadata:
     pg: "npm:^8.12.0"
     prettier: "npm:^3.0.0"
     prettier-plugin-organize-imports: "npm:^4.0.0"
+    prisma: "npm:^5.19.1"
     reflect-metadata: "npm:^0.2.0"
     rxjs: "npm:^7.8.1"
     smtpexpress: "npm:^0.0.14"
@@ -2680,6 +2736,24 @@ __metadata:
   version: 1.3.1
   resolution: "cjs-module-lexer@npm:1.3.1"
   checksum: 10c0/cd98fbf3c7f4272fb0ebf71d08d0c54bc75ce0e30b9d186114e15b4ba791f3d310af65a339eea2a0318599af2818cdd8886d353b43dfab94468f72987397ad16
+  languageName: node
+  linkType: hard
+
+"class-transformer@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "class-transformer@npm:0.5.1"
+  checksum: 10c0/19809914e51c6db42c036166839906420bb60367df14e15f49c45c8c1231bf25ae661ebe94736ee29cc688b77101ef851a8acca299375cc52fc141b64acde18a
+  languageName: node
+  linkType: hard
+
+"class-validator@npm:^0.14.1":
+  version: 0.14.1
+  resolution: "class-validator@npm:0.14.1"
+  dependencies:
+    "@types/validator": "npm:^13.11.8"
+    libphonenumber-js: "npm:^1.10.53"
+    validator: "npm:^13.9.0"
+  checksum: 10c0/946e914e47548b5081449c720ea6a4877bac63dc960e14fca4b990b56e64efe3802d12f07ec22d6420c290245b72ea2d646939239f2a3b597794e6c4c2a4f2ae
   languageName: node
   linkType: hard
 
@@ -3909,7 +3983,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
+"fsevents@npm:2.3.3, fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
   version: 2.3.3
   resolution: "fsevents@npm:2.3.3"
   dependencies:
@@ -3919,7 +3993,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@npm%3A^2.3.2#optional!builtin<compat/fsevents>, fsevents@patch:fsevents@npm%3A~2.3.2#optional!builtin<compat/fsevents>":
+"fsevents@patch:fsevents@npm%3A2.3.3#optional!builtin<compat/fsevents>, fsevents@patch:fsevents@npm%3A^2.3.2#optional!builtin<compat/fsevents>, fsevents@patch:fsevents@npm%3A~2.3.2#optional!builtin<compat/fsevents>":
   version: 2.3.3
   resolution: "fsevents@patch:fsevents@npm%3A2.3.3#optional!builtin<compat/fsevents>::version=2.3.3&hash=df0bf1"
   dependencies:
@@ -5225,6 +5299,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"libphonenumber-js@npm:^1.10.53":
+  version: 1.11.8
+  resolution: "libphonenumber-js@npm:1.11.8"
+  checksum: 10c0/6128c25429b4d01dd60d668084d6015cf56f798e464ad625e0abe28cf3d52f046966f0c6bd21295ba154170416e85ab674f436f7b0cc132bf82cfe16beab230c
+  languageName: node
+  linkType: hard
+
 "lines-and-columns@npm:^1.1.6":
   version: 1.2.4
   resolution: "lines-and-columns@npm:1.2.4"
@@ -6414,6 +6495,21 @@ __metadata:
     ansi-styles: "npm:^5.0.0"
     react-is: "npm:^18.0.0"
   checksum: 10c0/edc5ff89f51916f036c62ed433506b55446ff739358de77207e63e88a28ca2894caac6e73dcb68166a606e51c8087d32d400473e6a9fdd2dbe743f46c9c0276f
+  languageName: node
+  linkType: hard
+
+"prisma@npm:^5.19.1":
+  version: 5.19.1
+  resolution: "prisma@npm:5.19.1"
+  dependencies:
+    "@prisma/engines": "npm:5.19.1"
+    fsevents: "npm:2.3.3"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    prisma: build/index.js
+  checksum: 10c0/efbe4966fc5450e8c3c7e09f8e9950c2068e90f44b1cbb3584f4e48d7188a4d5230ec8fb12c3b9ba75fa7407fe45c0527123579e121a31ef652512f39c29c2d9
   languageName: node
   linkType: hard
 
@@ -7798,6 +7894,13 @@ __metadata:
     "@types/istanbul-lib-coverage": "npm:^2.0.1"
     convert-source-map: "npm:^2.0.0"
   checksum: 10c0/968bcf1c7c88c04df1ffb463c179558a2ec17aa49e49376120504958239d9e9dad5281aa05f2a78542b8557f2be0b0b4c325710262f3b838b40d703d5ed30c23
+  languageName: node
+  linkType: hard
+
+"validator@npm:^13.9.0":
+  version: 13.12.0
+  resolution: "validator@npm:13.12.0"
+  checksum: 10c0/21d48a7947c9e8498790550f56cd7971e0e3d724c73388226b109c1bac2728f4f88caddfc2f7ed4b076f9b0d004316263ac786a17e9c4edf075741200718cd32
   languageName: node
   linkType: hard
 

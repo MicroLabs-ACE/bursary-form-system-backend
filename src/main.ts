@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   const configService = app.get(ConfigService);
   const cookieSecret = configService.get<string>('COOKIE_SECRET');
   app.use(cookieParser(cookieSecret));
@@ -16,6 +17,6 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  await app.listen(8080);
+  await app.listen(3000);
 }
 bootstrap();

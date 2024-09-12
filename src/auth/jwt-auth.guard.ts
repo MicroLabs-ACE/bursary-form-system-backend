@@ -38,7 +38,7 @@ export class JwtAuthGuard implements CanActivate {
         { secret: accessTokenSecret },
       );
       request['user'] = accessTokenPayload;
-    } catch (err) {
+    } catch (err: any) {
       if (err.name === 'TokenExpiredError') {
         if (!refreshToken) {
           throw new UnauthorizedException('No refresh token found');

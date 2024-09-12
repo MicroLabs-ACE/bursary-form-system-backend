@@ -1,16 +1,19 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
-import { User } from 'src/entity/user.entity';
+import { UserMeta } from 'src/entity/user-meta.entity';
 import { Repository } from 'typeorm';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class GoogleOauth2Strategy extends PassportStrategy(Strategy, 'google') {
   constructor(
     @Inject() private configService: ConfigService,
-    @InjectRepository(User) private usersRepository: Repository<User>,
+    @InjectRepository(UserMeta)
+    private userMetaRepository: Repository<UserMeta>,
+    private readonly authService: AuthService,
   ) {
     super({
       clientID: configService.get<string>('GOOGLE_CLIENT_ID'),
@@ -28,10 +31,7 @@ export class GoogleOauth2Strategy extends PassportStrategy(Strategy, 'google') {
   ) {
     const { emails } = profile;
     const email = emails[0].value;
-    const user = await this.usersRepository.findOneBy({ email });
-    if (!user) {
-      throw new BadRequestException('User does not exist');
-    }
-    done(null, user);
+    const { userMeta } = await this.authService.findAndCreateUserMeta(email);
+    done(null, userMeta);
   }
 }

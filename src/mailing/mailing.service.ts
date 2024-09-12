@@ -2,7 +2,7 @@ import { Injectable, NotImplementedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createClient } from 'smtpexpress';
 import * as speakeasy from 'speakeasy';
-import { MailDto, MailTemplate } from './dto/mail.dto';
+import { MailDto, MailTemplates } from './dto/mail.dto';
 import { OtpDto } from './dto/otp.dto';
 
 @Injectable()
@@ -47,7 +47,7 @@ export class MailingService {
     let message: string;
 
     switch (mailDto.template) {
-      case MailTemplate.EMAIL_OTP_LOGIN:
+      case MailTemplates.EMAIL_OTP_LOGIN:
         subject = 'Email OTP';
         message = `<h1>Your OTP: ${mailDto.message}</h1>`;
         break;

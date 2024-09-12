@@ -2,20 +2,39 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserMeta } from 'src/entity/user-meta.entity';
+import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
-import { User } from '../entity/user.entity';
-import { MailDto, MailTemplate } from '../mailing/dto/mail.dto';
+import { MailDto, MailTemplates } from '../mailing/dto/mail.dto';
 import { OtpDto } from '../mailing/dto/otp.dto';
 import { MailingService } from '../mailing/mailing.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User) private usersRepository: Repository<User>,
+    @InjectRepository(UserMeta)
+    private userMetaRepository: Repository<UserMeta>,
     private readonly configService: ConfigService,
     private readonly mailingService: MailingService,
     private readonly jwtService: JwtService,
+    private readonly usersService: UsersService,
   ) {}
+
+  async findAndCreateUserMeta(email: string) {
+    const foundUser = await this.usersService.findOne(email);
+    if (!foundUser) {
+      throw new BadRequestException('User does not exist');
+    }
+
+    const foundUserMeta = await this.userMetaRepository.findOneBy({ email });
+    if (!foundUserMeta) {
+      const newUserMeta = this.userMetaRepository.create({ email });
+      const createdUserMeta = await this.userMetaRepository.save(newUserMeta);
+      return { user: foundUser, userMeta: createdUserMeta };
+    }
+
+    return { user: foundUser, userMeta: foundUserMeta };
+  }
 
   async generateAccessToken(payload: any) {
     const accessToken = await this.jwtService.signAsync(payload, {
@@ -35,67 +54,38 @@ export class AuthService {
     return refreshToken;
   }
 
-  async login(user: User) {
-    const payload = { sub: user.id, email: user.email };
+  async login(userMeta: UserMeta) {
+    const payload = { sub: userMeta.id, email: userMeta.email };
     const accessToken = await this.generateAccessToken(payload);
     const refreshToken = await this.generateRefreshToken(payload);
     return { accessToken, refreshToken };
   }
 
   async requestOtp(email: string) {
-    const foundUser = await this.usersRepository.findOneBy({ email });
-    if (!foundUser) {
-      throw new BadRequestException('User does not exist');
-    }
-
-    const otpDto: OtpDto = await this.mailingService.generateOtp();
-    await this.usersRepository.update({ email }, { secret: otpDto.secret });
-
-    const mailDto: MailDto = {
-      name: `${foundUser.firstName} ${foundUser.lastName}`,
-      contact: foundUser.email,
-      message: otpDto.token,
-      template: MailTemplate.EMAIL_OTP_LOGIN,
-    };
-    await this.mailingService.sendEmail(mailDto);
-  }
-
-  async mockRequestOtp(email: string) {
+    const { user } = await this.findAndCreateUserMeta(email);
     const otpDto: OtpDto = await this.mailingService.generateOtp();
     const mailDto: MailDto = {
-      name: `Victor Momodu`,
-      contact: email,
+      name: `${user.firstName} ${user.lastName}`,
+      contact: user.email,
       message: otpDto.token,
-      template: MailTemplate.EMAIL_OTP_LOGIN,
+      template: MailTemplates.EMAIL_OTP_LOGIN,
     };
-    await this.mailingService.sendEmail(mailDto);
-    return otpDto;
+    console.log('Token:', otpDto.token);
+
+    await Promise.all([
+      this.mailingService.sendEmail(mailDto),
+      this.userMetaRepository.update({ email }, { secret: otpDto.secret }),
+    ]);
   }
 
   async verifyOtp(email: string, token: string) {
-    const foundUser = await this.usersRepository.findOneBy({ email });
-    const otpDto: OtpDto = { token, secret: foundUser.secret };
+    const foundUserMeta = await this.userMetaRepository.findOneBy({ email });
+    const otpDto: OtpDto = { token, secret: foundUserMeta.secret };
     const isValid = await this.mailingService.validateOtp(otpDto);
     if (!isValid) {
       throw new BadRequestException('Invalid OTP');
     }
 
-    return foundUser;
-  }
-
-  async mockVerifyOtp(email: string, token: string, secret: string) {
-    const otpDto: OtpDto = { token, secret };
-    const isValid = await this.mailingService.validateOtp(otpDto);
-    if (!isValid) {
-      throw new BadRequestException('Invalid OTP');
-    }
-
-    return {
-      id: 1,
-      email,
-      firstName: 'Victor',
-      lastName: 'Momodu',
-      secret,
-    };
+    return foundUserMeta;
   }
 }
