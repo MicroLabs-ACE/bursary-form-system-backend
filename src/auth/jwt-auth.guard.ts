@@ -38,7 +38,7 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException('Token(s) not found');
     }
 
-    const { payload: accessTokenPayload, isExpired } = await this.verifyToken(
+    const { payload, isExpired } = await this.verifyToken(
       accessToken,
       this.accessTokenSecret,
     );
@@ -54,13 +54,13 @@ export class JwtAuthGuard implements CanActivate {
       }
 
       const refreshedAccessToken =
-        await this.authService.generateAccessToken(accessTokenPayload);
+        await this.authService.generateAccessToken(payload);
       response.cookie('access_token', refreshedAccessToken);
       const refreshedRefreshToken =
-        await this.authService.generateRefreshToken(accessTokenPayload);
+        await this.authService.generateRefreshToken(payload);
       response.cookie('refresh_token', refreshedRefreshToken);
     }
-
+    request.user = await this.authService.getUserData(payload.email);
     return true;
   }
 

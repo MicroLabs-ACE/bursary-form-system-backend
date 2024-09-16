@@ -5,6 +5,10 @@ import {
   IsString,
 } from 'class-validator';
 
+export enum Role {
+  USER = 'user',
+}
+
 export class UserDto {
   @IsString()
   @IsNotEmpty()
@@ -25,4 +29,7 @@ export class UserDto {
   @IsPhoneNumber('NG')
   @IsNotEmpty()
   phoneNumber: string;
+
+  @IsNotEmpty()
+  roles: Role[];
 }

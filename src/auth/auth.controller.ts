@@ -15,10 +15,14 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Request, Response } from 'express';
+import { Role } from 'src/users/dto/user.dto';
 import { AuthService } from './auth.service';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { GoogleOauth2Guard } from './google-oauth2.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { Roles } from './roles.decorator';
+import { RolesGuard } from './roles.guard';
+import { User } from './user.decorator';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -80,8 +84,9 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiCookieAuth()
   @Get('dashboard')
-  @UseGuards(JwtAuthGuard)
-  async dashboard() {
-    return 'This is the dashboard';
+  @Roles([Role.USER])
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async dashboard(@User() user: any) {
+    return user;
   }
 }

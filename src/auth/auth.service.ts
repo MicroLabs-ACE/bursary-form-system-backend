@@ -37,10 +37,15 @@ export class AuthService {
     return { user: foundUser, userMeta: foundUserMeta };
   }
 
+  async getUserData(email: string) {
+    const foundUser = await this.usersService.findOne(email);
+    return foundUser;
+  }
+
   async generateAccessToken(payload: PayloadDto) {
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('ACCESS_TOKEN_SECRET'),
-      expiresIn: this.configService.get<number>('ACCESS_TOKEN_DURATION'),
+      expiresIn: this.configService.get<string>('ACCESS_TOKEN_DURATION'),
     });
 
     return accessToken;
@@ -52,7 +57,7 @@ export class AuthService {
       { email },
       {
         secret: this.configService.get<string>('REFRESH_TOKEN_SECRET'),
-        expiresIn: this.configService.get<number>('REFRESH_TOKEN_DURATION'),
+        expiresIn: this.configService.get<string>('REFRESH_TOKEN_DURATION'),
       },
     );
 
