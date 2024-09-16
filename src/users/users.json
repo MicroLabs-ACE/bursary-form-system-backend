@@ -1,0 +1,53 @@
+[
+  {
+    "firstName": "Olubukola",
+    "lastName": "Balogun",
+    "email": "olubukolabalogun@oauife.edu.ng",
+    "phoneNumber": "+2348035779488"
+  },
+  {
+    "firstName": "Mr",
+    "lastName": "Adelakun",
+    "email": "adelakun@oauife.edu.ng",
+    "phoneNumber": "+2348038176348"
+  },
+  {
+    "firstName": "Olubunmi",
+    "lastName": "Kuye",
+    "email": "olubunmikuye@oauife.edu.ng",
+    "phoneNumber": "+2348037178930"
+  },
+  {
+    "firstName": "Olufunso",
+    "lastName": "Omoseani",
+    "email": "omoseani@oauife.edu.ng",
+    "phoneNumber": "+2348037178930"
+  },
+  {
+    "firstName": "Victor",
+    "lastName": "Momodu",
+    "middleName": "Adebowale",
+    "email": "victoramomodu@gmail.com",
+    "phoneNumber": "+2348164998936"
+  },
+  {
+    "firstName": "Daniel",
+    "lastName": "Ogunsola",
+    "email": "thannie016@gmail.com",
+    "phoneNumber": "+2347025154553"
+  },
+  {
+    "firstName": "Oluwasanmi",
+    "lastName": "Ogunyemi",
+    "middleName": "Hezekiah",
+    "email": "helxie3@gmail.com",
+    "phoneNumber": "+2348139285743"
+  },
+  {
+    "firstName": "Omotola",
+    "lastName": "Olaoti",
+    "middleName": "Favour",
+    "email": "therasusa@gmail.com",
+    "phoneNumber": "+2349069423456"
+  }
+]

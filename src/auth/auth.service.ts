@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { MailDto, MailTemplates } from '../mailing/dto/mail.dto';
 import { OtpDto } from '../mailing/dto/otp.dto';
 import { MailingService } from '../mailing/mailing.service';
+import { PayloadDto } from './dto/payload.dto';
 
 @Injectable()
 export class AuthService {
@@ -36,7 +37,7 @@ export class AuthService {
     return { user: foundUser, userMeta: foundUserMeta };
   }
 
-  async generateAccessToken(payload: any) {
+  async generateAccessToken(payload: PayloadDto) {
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('ACCESS_TOKEN_SECRET'),
       expiresIn: this.configService.get<number>('ACCESS_TOKEN_DURATION'),
@@ -45,20 +46,28 @@ export class AuthService {
     return accessToken;
   }
 
-  async generateRefreshToken(payload: any) {
-    const refreshToken = await this.jwtService.signAsync(payload, {
-      secret: this.configService.get<string>('REFRESH_TOKEN_SECRET'),
-      expiresIn: this.configService.get<number>('REFRESH_TOKEN_DURATION'),
-    });
+  async generateRefreshToken(payload: PayloadDto) {
+    const { email } = payload;
+    const refreshToken = await this.jwtService.signAsync(
+      { email },
+      {
+        secret: this.configService.get<string>('REFRESH_TOKEN_SECRET'),
+        expiresIn: this.configService.get<number>('REFRESH_TOKEN_DURATION'),
+      },
+    );
 
     return refreshToken;
   }
 
-  async login(userMeta: UserMeta) {
-    const payload = { sub: userMeta.id, email: userMeta.email };
+  private async generateTokens(payload: PayloadDto) {
     const accessToken = await this.generateAccessToken(payload);
     const refreshToken = await this.generateRefreshToken(payload);
     return { accessToken, refreshToken };
+  }
+
+  async login(userMeta: UserMeta) {
+    const payload: PayloadDto = { id: userMeta.id, email: userMeta.email };
+    return await this.generateTokens(payload);
   }
 
   async requestOtp(email: string) {
@@ -70,7 +79,6 @@ export class AuthService {
       message: otpDto.token,
       template: MailTemplates.EMAIL_OTP_LOGIN,
     };
-    console.log('Token:', otpDto.token);
 
     await Promise.all([
       this.mailingService.sendEmail(mailDto),
