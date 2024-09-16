@@ -79,14 +79,14 @@ export class AuthController {
     response.status(200).json({ message: 'Logged in successfully' });
   }
 
-  @ApiOperation({ summary: 'Access dashboard' })
-  @ApiResponse({ status: 200, description: 'Dashboard accessed successfully' })
+  @ApiOperation({ summary: 'User info' })
+  @ApiResponse({ status: 200, description: 'User info displayed' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiCookieAuth()
-  @Get('dashboard')
+  @Get('user')
   @Roles([Role.USER])
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async dashboard(@User() user: any) {
+  async user(@User() user: any) {
     return user;
   }
 }
