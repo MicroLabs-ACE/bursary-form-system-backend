@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserMeta } from 'src/entity/user-meta.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { UserMeta } from 'src/schemas/user-meta.schema';
 import { UsersService } from 'src/users/users.service';
-import { Repository } from 'typeorm';
 import { MailDto, MailTemplates } from '../mailing/dto/mail.dto';
 import { OtpDto } from '../mailing/dto/otp.dto';
 import { MailingService } from '../mailing/mailing.service';
@@ -13,12 +13,11 @@ import { PayloadDto } from './dto/payload.dto';
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(UserMeta)
-    private userMetaRepository: Repository<UserMeta>,
     private readonly configService: ConfigService,
     private readonly mailingService: MailingService,
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
+    @InjectModel(UserMeta.name) private userMetaModel: Model<UserMeta>,
   ) {}
 
   async findAndCreateUserMeta(email: string) {
@@ -27,10 +26,9 @@ export class AuthService {
       throw new BadRequestException('User does not exist');
     }
 
-    const foundUserMeta = await this.userMetaRepository.findOneBy({ email });
+    const foundUserMeta = await this.userMetaModel.findOne({ email }).exec();
     if (!foundUserMeta) {
-      const newUserMeta = this.userMetaRepository.create({ email });
-      const createdUserMeta = await this.userMetaRepository.save(newUserMeta);
+      const createdUserMeta = await this.userMetaModel.create({ email });
       return { user: foundUser, userMeta: createdUserMeta };
     }
 
@@ -65,19 +63,30 @@ export class AuthService {
   }
 
   private async generateTokens(payload: PayloadDto) {
-    const accessToken = await this.generateAccessToken(payload);
-    const refreshToken = await this.generateRefreshToken(payload);
+    const [accessToken, refreshToken] = await Promise.all([
+      this.generateAccessToken(payload),
+      this.generateRefreshToken(payload),
+    ]);
     return { accessToken, refreshToken };
   }
 
   async login(userMeta: UserMeta) {
-    const payload: PayloadDto = { id: userMeta.id, email: userMeta.email };
+    const foundUserMeta = await this.userMetaModel
+      .findOne({ email: userMeta.email })
+      .exec();
+    const payload: PayloadDto = {
+      id: foundUserMeta._id.toHexString(),
+      email: userMeta.email,
+    };
     return await this.generateTokens(payload);
   }
 
   async requestOtp(email: string) {
-    const { user } = await this.findAndCreateUserMeta(email);
-    const otpDto: OtpDto = await this.mailingService.generateOtp();
+    const [{ user }, otpDto] = await Promise.all([
+      this.findAndCreateUserMeta(email),
+      this.mailingService.generateOtp(),
+    ]);
+
     const mailDto: MailDto = {
       name: `${user.firstName} ${user.lastName}`,
       contact: user.email,
@@ -87,12 +96,12 @@ export class AuthService {
 
     await Promise.all([
       this.mailingService.sendEmail(mailDto),
-      this.userMetaRepository.update({ email }, { secret: otpDto.secret }),
+      this.userMetaModel.updateOne({ email }, { secret: otpDto.secret }),
     ]);
   }
 
   async verifyOtp(email: string, token: string) {
-    const foundUserMeta = await this.userMetaRepository.findOneBy({ email });
+    const foundUserMeta = await this.userMetaModel.findOne({ email });
     const otpDto: OtpDto = { token, secret: foundUserMeta.secret };
     const isValid = await this.mailingService.validateOtp(otpDto);
     if (!isValid) {

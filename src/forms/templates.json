@@ -1,0 +1,33 @@
+{
+  "cashAdvance": {
+    "name": "cashAdvance",
+    "schema": {
+      "email": "string",
+      "amount": "number",
+      "bankName": "string",
+      "sortCode": "string",
+      "purposeOfAdvance": {
+        "enum": ["For Eba", "For Semo", "For Iyan", "For Amala", "For Fufu"]
+      },
+      "description": "string",
+      "callCentre": {
+        "enum": ["001", "002", "003"]
+      }
+    }
+  },
+  "imprest": {
+    "name": "Imprest",
+    "schema": {
+      "email": "string",
+      "amount": "number",
+      "bankName": "string",
+      "sortCode": "string",
+      "purposeOfAdvance": {
+        "enum": ["Yang", "Yeng", "Ying", "Yong", "Yung"]
+      },
+      "callCentre": {
+        "enum": ["001", "002", "003"]
+      }
+    }
+  }
+}
