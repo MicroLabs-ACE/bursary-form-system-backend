@@ -29,11 +29,7 @@ export class FormsController {
   @Get('/templates')
   @Roles([Role.USER])
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async getFormTemplate(@Query('template') template: string | null) {
-    if (!template) {
-      return await this.formsService.getFormTemplates();
-    }
-
-    return await this.formsService.getFormTemplate(template);
+  async getFormTemplates(@Query('templateName') templateName: string | null) {
+    return await this.formsService.getFormTemplates(templateName);
   }
 }
