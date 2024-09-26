@@ -1,16 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { Role, UserDto } from './dto/user.dto';
-import userRecords from './users.json';
+import userData from 'src/data/user-data.json';
+import { userDto, UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
   private readonly users: UserDto[];
   constructor() {
-    this.users = userRecords.map((record) => {
-      return {
-        ...record,
-        roles: record.roles.map((role) => role as Role),
-      };
+    this.users = userData.map((user) => {
+      return userDto.parse(user);
     });
   }
 

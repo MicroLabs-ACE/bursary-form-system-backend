@@ -1,8 +1,8 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import {
   ApiCookieAuth,
   ApiOperation,
-  ApiQuery,
+  ApiParam,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -13,23 +13,41 @@ import { Role } from 'src/users/dto/user.dto';
 import { FormsService } from './forms.service';
 
 @ApiTags('Forms')
+@ApiCookieAuth()
 @Controller('forms')
 export class FormsController {
   constructor(private readonly formsService: FormsService) {}
 
   @ApiOperation({ summary: 'Get form templates' })
-  @ApiQuery({
-    name: 'template',
+  @ApiParam({
+    name: 'templateName',
     description: 'Name of form template',
     type: 'string',
   })
   @ApiResponse({ status: 200, description: 'Form template retrieved' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiCookieAuth()
-  @Get('/templates')
+  @Get('/:templateName')
   @Roles([Role.USER])
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async getFormTemplates(@Query('templateName') templateName: string | null) {
+  async getFormTemplates(@Param('templateName') templateName: string | null) {
     return await this.formsService.getFormTemplates(templateName);
+  }
+
+  @ApiOperation({ summary: 'Process a form' })
+  @ApiParam({
+    name: 'templateName',
+    description: 'Name of form template',
+    type: 'string',
+  })
+  @ApiResponse({ status: 200, description: 'Form template processed' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @Post('/:templateName')
+  @Roles([Role.USER])
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async processForm(
+    @Param('templateName') templateName: string,
+    @Body() formObject: Record<string, string>,
+  ) {
+    await this.formsService.processForm(templateName, formObject);
   }
 }

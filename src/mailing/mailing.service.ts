@@ -12,15 +12,17 @@ export class MailingService {
 
   constructor(private readonly configService: ConfigService) {
     this.emailClient = createClient({
-      projectId: this.configService.get<string>('SMTPEXPRESS_PROJECT_ID'),
+      projectId: this.configService.get<string>(
+        'SMTPEXPRESS_PROJECT_ID',
+      ) as string,
       projectSecret: this.configService.get<string>(
         'SMTPEXPRESS_PROJECT_SECRET',
-      ),
+      ) as string,
     });
 
     this.senderEmail = this.configService.get<string>(
       'SMTPEXPRESS_SENDER_EMAIL',
-    );
+    ) as string;
   }
 
   async generateOtp() {

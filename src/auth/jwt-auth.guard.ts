@@ -22,10 +22,10 @@ export class JwtAuthGuard implements CanActivate {
   ) {
     this.accessTokenSecret = this.configService.get<string>(
       'ACCESS_TOKEN_SECRET',
-    );
+    ) as string;
     this.refreshTokenSecret = this.configService.get<string>(
       'REFRESH_TOKEN_SECRET',
-    );
+    ) as string;
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -60,7 +60,7 @@ export class JwtAuthGuard implements CanActivate {
         await this.authService.generateRefreshToken(payload);
       response.cookie('refresh_token', refreshedRefreshToken);
     }
-    request.user = await this.authService.getUserData(payload.email);
+    request.user = await this.authService.getUser(payload.email);
     return true;
   }
 

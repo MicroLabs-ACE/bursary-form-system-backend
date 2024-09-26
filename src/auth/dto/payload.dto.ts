@@ -1,9 +1,10 @@
-import { IsEmail, IsUUID } from 'class-validator';
+import { z } from 'zod';
 
-export class PayloadDto {
-  @IsEmail()
-  email: string;
+export const payloadDto = z
+  .object({
+    email: z.string().email(),
+    id: z.string().uuid(),
+  })
+  .required();
 
-  @IsUUID()
-  id: string;
-}
+export type PayloadDto = z.infer<typeof payloadDto>;

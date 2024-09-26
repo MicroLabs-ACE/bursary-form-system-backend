@@ -1,0 +1,198 @@
+[
+  {
+    "firstName": "Olubukola",
+    "lastName": "Balogun",
+    "email": "olubukolabalogun@oauife.edu.ng",
+    "phoneNumber": "+2348035779488",
+    "roles": ["user"],
+    "isAcademic": true,
+    "isPermanent": true,
+    "staffCode": "OAU-2015-1234",
+    "payrollId": "OAU-PAY-56789",
+    "salutation": "Dr",
+    "affiliation": "ASUU",
+    "grade": 9,
+    "salaryAccount": {
+      "bank": "First Bank of Nigeria",
+      "accountNumber": "3014567890",
+      "accountName": "Olubukola Balogun"
+    },
+    "secondaryAccount": {
+      "bank": "Guaranty Trust Bank",
+      "accountNumber": "0123456789",
+      "accountName": "Olubukola Balogun"
+    }
+  },
+  {
+    "firstName": "John",
+    "middleName": "Doe",
+    "lastName": "Adelakun",
+    "email": "adelakun@oauife.edu.ng",
+    "phoneNumber": "+2348038176348",
+    "roles": ["user", "authoriser"],
+    "isAcademic": false,
+    "isPermanent": true,
+    "staffCode": "OAU-2018-5678",
+    "payrollId": "OAU-PAY-12345",
+    "salutation": "Mr",
+    "affiliation": "SSANU",
+    "grade": 10,
+    "salaryAccount": {
+      "bank": "Zenith Bank",
+      "accountNumber": "2014567890",
+      "accountName": "Mr Adelakun"
+    },
+    "secondaryAccount": {
+      "bank": "Access Bank",
+      "accountNumber": "0987654321",
+      "accountName": "Mr Adelakun"
+    }
+  },
+  {
+    "firstName": "Olubunmi",
+    "lastName": "Kuye",
+    "email": "olubunmikuye@oauife.edu.ng",
+    "phoneNumber": "+2348037178930",
+    "roles": ["user"],
+    "isAcademic": false,
+    "isPermanent": true,
+    "staffCode": "OAU-2016-4321",
+    "payrollId": "OAU-PAY-78901",
+    "salutation": "Mr",
+    "affiliation": "SSANU",
+    "grade": 9,
+    "salaryAccount": {
+      "bank": "United Bank for Africa",
+      "accountNumber": "1234567890",
+      "accountName": "Olubunmi Kuye"
+    },
+    "secondaryAccount": {
+      "bank": "Stanbic IBTC",
+      "accountNumber": "9876543210",
+      "accountName": "Olubunmi Kuye"
+    }
+  },
+  {
+    "firstName": "Olufunso",
+    "lastName": "Omoseani",
+    "email": "omoseani@oauife.edu.ng",
+    "phoneNumber": "+2348037178930",
+    "roles": ["user", "authoriser"],
+    "isAcademic": false,
+    "isPermanent": true,
+    "staffCode": "OAU-2010-8765",
+    "payrollId": "OAU-PAY-23456",
+    "salutation": "Mrs",
+    "affiliation": "SSANU",
+    "grade": 9,
+    "salaryAccount": {
+      "bank": "Guaranty Trust Bank",
+      "accountNumber": "5678901234",
+      "accountName": "Olufunso Omoseani"
+    },
+    "secondaryAccount": {
+      "bank": "Fidelity Bank",
+      "accountNumber": "4321098765",
+      "accountName": "Olufunso Omoseani"
+    }
+  },
+  {
+    "firstName": "Victor",
+    "lastName": "Momodu",
+    "middleName": "Adebowale",
+    "email": "victoramomodu@gmail.com",
+    "phoneNumber": "+2348164998936",
+    "roles": ["user"],
+    "isAcademic": false,
+    "isPermanent": false,
+    "staffCode": "OAU-2019-9876",
+    "payrollId": "OAU-PAY-34567",
+    "salutation": "Mr",
+    "affiliation": "NASU",
+    "grade": 9,
+    "salaryAccount": {
+      "bank": "Access Bank",
+      "accountNumber": "6789012345",
+      "accountName": "Victor Adebowale Momodu"
+    },
+    "secondaryAccount": {
+      "bank": "Zenith Bank",
+      "accountNumber": "5432109876",
+      "accountName": "Victor Adebowale Momodu"
+    }
+  },
+  {
+    "firstName": "Daniel",
+    "lastName": "Ogunsola",
+    "email": "thannie016@gmail.com",
+    "phoneNumber": "+2347025154553",
+    "roles": ["user"],
+    "isAcademic": false,
+    "isPermanent": true,
+    "staffCode": "OAU-2020-2468",
+    "payrollId": "OAU-PAY-45678",
+    "salutation": "Mr",
+    "affiliation": "NASU",
+    "grade": 9,
+    "salaryAccount": {
+      "bank": "First Bank of Nigeria",
+      "accountNumber": "7890123456",
+      "accountName": "Daniel Ogunsola"
+    },
+    "secondaryAccount": {
+      "bank": "United Bank for Africa",
+      "accountNumber": "6543210987",
+      "accountName": "Daniel Ogunsola"
+    }
+  },
+  {
+    "firstName": "Oluwasanmi",
+    "lastName": "Ogunyemi",
+    "middleName": "Hezekiah",
+    "email": "helxie3@gmail.com",
+    "phoneNumber": "+2348139285743",
+    "roles": ["user"],
+    "isAcademic": false,
+    "isPermanent": true,
+    "staffCode": "OAU-2017-1357",
+    "payrollId": "OAU-PAY-90009",
+    "salutation": "Prof",
+    "affiliation": "ASUU",
+    "grade": 9,
+    "salaryAccount": {
+      "bank": "Zenith Bank",
+      "accountNumber": "8901234567",
+      "accountName": "Oluwasanmi Hezekiah Ogunyemi"
+    },
+    "secondaryAccount": {
+      "bank": "Stanbic IBTC",
+      "accountNumber": "7654321098",
+      "accountName": "Oluwasanmi Hezekiah Ogunyemi"
+    }
+  },
+  {
+    "firstName": "Omotola",
+    "lastName": "Olaoti",
+    "middleName": "Favour",
+    "email": "therasusa@gmail.com",
+    "phoneNumber": "+2349069423456",
+    "roles": ["user"],
+    "isAcademic": false,
+    "isPermanent": false,
+    "staffCode": "OAU-2018-2068",
+    "payrollId": "OAU-PAY-11119",
+    "salutation": "Dr",
+    "affiliation": "ASUU",
+    "grade": 9,
+    "salaryAccount": {
+      "bank": "Guaranty Trust Bank",
+      "accountNumber": "9012345678",
+      "accountName": "Omotola Favour Olaoti"
+    },
+    "secondaryAccount": {
+      "bank": "Access Bank",
+      "accountNumber": "8765432109",
+      "accountName": "Omotola Favour Olaoti"
+    }
+  }
+]

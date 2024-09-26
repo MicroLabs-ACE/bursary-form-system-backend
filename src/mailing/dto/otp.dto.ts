@@ -1,11 +1,7 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { z } from 'zod';
 
-export class OtpDto {
-  @IsString()
-  @IsNotEmpty()
-  secret: string;
+export const otpDto = z
+  .object({ secret: z.string(), token: z.string() })
+  .required();
 
-  @IsString()
-  @IsNotEmpty()
-  token: string;
-}
+export type OtpDto = z.infer<typeof otpDto>;

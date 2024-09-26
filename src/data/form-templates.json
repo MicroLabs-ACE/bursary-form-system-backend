@@ -5,12 +5,12 @@
     "description": "A form used to get a cash advance, usually large sums of money.",
     "rules": ["Cannot be less than 50K", "Must be repaid in 50 days"],
     "schema": {
-      "amount": "Money",
+      "amount": "Number",
       "bankName": "String",
       "sortCode": "String",
-      "objectCode": "ObjectCode",
+      "objectCode": "String",
       "purposeOfAdvance": "String",
-      "callCentre": "CallCentre"
+      "callCentre": "String"
     }
   },
   {
@@ -19,12 +19,12 @@
     "description": "A form used to get imprest, usually money in small amounts.",
     "rules": ["Cannot be greater than 50K", "Must be repaid in 20 days"],
     "schema": {
-      "amount": "Money",
+      "amount": "Number",
       "bankName": "String",
       "sortCode": "String",
-      "objectCode": "ObjectCode",
-      "items": "List",
-      "callCentre": "CallCentre"
+      "objectCode": "String",
+      "purposeOfAdvance": "String",
+      "callCentre": "String"
     }
   }
 ]

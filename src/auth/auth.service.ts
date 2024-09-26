@@ -35,7 +35,7 @@ export class AuthService {
     return { user: foundUser, userMeta: foundUserMeta };
   }
 
-  async getUserData(email: string) {
+  async getUser(email: string) {
     const foundUser = await this.usersService.findOne(email);
     return foundUser;
   }
@@ -74,6 +74,10 @@ export class AuthService {
     const foundUserMeta = await this.userMetaModel
       .findOne({ email: userMeta.email })
       .exec();
+    if (!foundUserMeta) {
+      throw new BadRequestException('User does not exist');
+    }
+
     const payload: PayloadDto = {
       id: foundUserMeta._id.toHexString(),
       email: userMeta.email,
@@ -101,8 +105,12 @@ export class AuthService {
   }
 
   async verifyOtp(email: string, token: string) {
-    const foundUserMeta = await this.userMetaModel.findOne({ email });
-    const otpDto: OtpDto = { token, secret: foundUserMeta.secret };
+    const foundUserMeta = await this.userMetaModel.findOne({ email }).exec();
+    if (!foundUserMeta) {
+      throw new BadRequestException('User does not exist');
+    }
+
+    const otpDto: OtpDto = { token, secret: foundUserMeta.secret ?? '' };
     const isValid = await this.mailingService.validateOtp(otpDto);
     if (!isValid) {
       throw new BadRequestException('Invalid OTP');

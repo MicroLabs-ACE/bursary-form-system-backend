@@ -8,14 +8,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
-  ApiBody,
   ApiCookieAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { Request, Response } from 'express';
-import { Role } from 'src/users/dto/user.dto';
+import { Role, UserDto } from 'src/users/dto/user.dto';
 import { AuthService } from './auth.service';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { GoogleOauth2Guard } from './google-oauth2.guard';
@@ -48,13 +47,10 @@ export class AuthController {
     const { accessToken, refreshToken } = await this.authService.login(user);
     response.cookie('access_token', accessToken);
     response.cookie('refresh_token', refreshToken);
-    response.status(200).json({ message: 'Logged in successfully' });
+    response.status(200).send();
   }
 
   @ApiOperation({ summary: 'Request OTP' })
-  @ApiBody({
-    schema: { type: 'object', properties: { email: { type: 'string' } } },
-  })
   @ApiResponse({ status: 200, description: 'OTP sent successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
   @Post('otp/request')
@@ -63,7 +59,6 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Verify OTP' })
-  @ApiBody({ type: VerifyOtpDto })
   @ApiResponse({ status: 200, description: 'OTP verified successfully' })
   @ApiResponse({ status: 400, description: 'Invalid OTP' })
   @Post('otp/verify')
@@ -86,7 +81,7 @@ export class AuthController {
   @Get('user')
   @Roles([Role.USER])
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async user(@User() user: any) {
+  async user(@User() user: UserDto) {
     return user;
   }
 }

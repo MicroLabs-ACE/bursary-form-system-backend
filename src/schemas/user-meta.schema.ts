@@ -6,10 +6,10 @@ export type UserMetaDocument = HydratedDocument<UserMeta>;
 @Schema()
 export class UserMeta {
   @Prop({ required: true })
-  email: string;
+  email!: string;
 
   @Prop()
-  secret: string;
+  secret?: string;
 }
 
 export const UserMetaSchema = SchemaFactory.createForClass(UserMeta);

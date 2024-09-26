@@ -1,15 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsNumberString, Length } from 'class-validator';
+import { z } from 'zod';
 
-export class VerifyOtpDto {
-  @IsEmail()
-  @IsNotEmpty()
-  @ApiProperty()
-  email: string;
+export const verifyOtpDto = z.object({
+  email: z.string().email(),
+  token: z.string().length(6),
+});
 
-  @IsNumberString()
-  @IsNotEmpty()
-  @Length(6)
-  @ApiProperty()
-  token: string;
-}
+export type VerifyOtpDto = z.infer<typeof verifyOtpDto>;
