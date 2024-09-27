@@ -9,7 +9,8 @@ import {
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
-import { Role } from 'src/users/dto/user.dto';
+import { User } from 'src/auth/user.decorator';
+import { Role, UserDto } from 'src/users/dto/user.dto';
 import { FormsService } from './forms.service';
 
 @ApiTags('Forms')
@@ -45,9 +46,10 @@ export class FormsController {
   @Roles([Role.USER])
   @UseGuards(JwtAuthGuard, RolesGuard)
   async processForm(
+    @User() user: UserDto,
     @Param('templateName') templateName: string,
     @Body() formObject: Record<string, string>,
   ) {
-    await this.formsService.processForm(templateName, formObject);
+    await this.formsService.processForm(user.email, templateName, formObject);
   }
 }

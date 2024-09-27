@@ -5,7 +5,7 @@ export type UserMetaDocument = HydratedDocument<UserMeta>;
 
 @Schema()
 export class UserMeta {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true, index: true })
   email!: string;
 
   @Prop()

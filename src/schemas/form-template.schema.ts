@@ -5,7 +5,7 @@ export type FormTemplateDocument = HydratedDocument<FormTemplate>;
 
 @Schema()
 export class FormTemplate {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true, index: true })
   name!: string;
 
   @Prop({ required: true })
@@ -18,7 +18,7 @@ export class FormTemplate {
   rules!: string[];
 
   @Prop({ required: true, type: SchemaTypes.Map, of: SchemaTypes.Mixed })
-  schema!: object;
+  format!: object;
 }
 
 export const FormTemplateSchema = SchemaFactory.createForClass(FormTemplate);

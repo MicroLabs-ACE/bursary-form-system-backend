@@ -4,7 +4,7 @@
     "displayName": "Cash Advance",
     "description": "A form used to get a cash advance, usually large sums of money.",
     "rules": ["Cannot be less than 50K", "Must be repaid in 50 days"],
-    "schema": {
+    "format": {
       "amount": "Number",
       "bankName": "String",
       "sortCode": "String",
@@ -18,7 +18,7 @@
     "displayName": "Imprest",
     "description": "A form used to get imprest, usually money in small amounts.",
     "rules": ["Cannot be greater than 50K", "Must be repaid in 20 days"],
-    "schema": {
+    "format": {
       "amount": "Number",
       "bankName": "String",
       "sortCode": "String",

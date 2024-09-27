@@ -4,55 +4,60 @@ import {
   NotFoundException,
   OnModuleInit,
 } from '@nestjs/common';
-import { InjectConnection, InjectModel } from '@nestjs/mongoose';
-import { Connection, Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import formTemplates from 'src/data/form-templates.json';
+import { FormObject } from 'src/schemas/form-object.schema';
 import { FormTemplate } from 'src/schemas/form-template.schema';
-import { z, ZodError, ZodType } from 'zod';
+import { UserMeta } from 'src/schemas/user-meta.schema';
+import { z, ZodType } from 'zod';
 
 @Injectable()
 export class FormsService implements OnModuleInit {
   constructor(
     @InjectModel(FormTemplate.name)
     private formTemplateModel: Model<FormTemplate>,
-    @InjectConnection() private connection: Connection,
+    @InjectModel(FormObject.name) private formObjectModel: Model<FormObject>,
+    @InjectModel(UserMeta.name) private userMetaModel: Model<UserMeta>,
   ) {}
 
   async onModuleInit() {
-    this.formTemplateModel.create(formTemplates);
+    try {
+      await this.formTemplateModel.create(formTemplates);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async getFormTemplates(templateName: string | null) {
     return this.formTemplateModel.find({ name: templateName }).exec();
   }
 
-  async processForm(templateName: string, formObject: Record<string, string>) {
-    const formTemplate = await this.formTemplateModel.findOne({
-      name: templateName,
-    });
+  async processForm(email: string, templateName: string, formData: object) {
+    const formTemplate = await this.formTemplateModel
+      .findOne({
+        name: templateName,
+      })
+      .exec();
+
     if (!formTemplate) {
       throw new NotFoundException('Template does not exist');
     }
 
-    const formValidator = await this.generateFormValidator(formTemplate.schema);
-    type FormType = z.infer<typeof formValidator>;
-
-    try {
-      const validatedFormObject: FormType =
-        await formValidator.parseAsync(formObject);
-      await this.submitForm(templateName, validatedFormObject);
-    } catch (error) {
-      if (error instanceof ZodError) {
-        throw new BadRequestException(error.message);
-      }
+    const formValidator = await this.generateFormValidator(formTemplate.format);
+    const parseResult = await formValidator.safeParseAsync(formData);
+    if (parseResult.success) {
+      await this.submitForm(email, templateName, formData);
+    } else {
+      throw new BadRequestException('Invalid form format');
     }
   }
 
-  private async generateFormValidator(formSchema: object) {
+  private async generateFormValidator(formFormat: object) {
     let formValidator = z.object({});
     let fieldValidator: ZodType;
 
-    for (const [fieldName, fieldType] of Object.entries(formSchema)) {
+    for (const [fieldName, fieldType] of Object(formFormat).entries()) {
       switch (fieldType) {
         case 'Number':
           fieldValidator = z.number().nonnegative();
@@ -72,8 +77,22 @@ export class FormsService implements OnModuleInit {
     return formValidator;
   }
 
-  private async submitForm(templateName: string, formObject: object) {
-    const formCollection = this.connection.collection(templateName);
-    await formCollection.insertOne(formObject);
+  private async submitForm(
+    email: string,
+    templateName: string,
+    formData: object,
+  ) {
+    const [foundUserMeta, foundFormTemplate] = await Promise.all([
+      this.userMetaModel.findOne({ email }),
+      this.formTemplateModel.findOne({
+        name: templateName,
+      }),
+    ]);
+
+    await this.formObjectModel.create({
+      userMeta: foundUserMeta,
+      formTemplate: foundFormTemplate,
+      formData,
+    });
   }
 }
