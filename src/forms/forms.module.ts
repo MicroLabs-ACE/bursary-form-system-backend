@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from 'src/auth/auth.module';
+import { EventsModule } from 'src/events/events.module';
 import { FormObject, FormObjectSchema } from 'src/schemas/form-object.schema';
 import {
   FormTemplate,
@@ -13,6 +14,7 @@ import { FormsService } from './forms.service';
 @Module({
   imports: [
     AuthModule,
+    EventsModule,
     MongooseModule.forFeature([
       { name: FormTemplate.name, schema: FormTemplateSchema },
       { name: FormObject.name, schema: FormObjectSchema },

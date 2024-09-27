@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { EventsModule } from './events/events.module';
 import { FormsModule } from './forms/forms.module';
 import { MailingModule } from './mailing/mailing.module';
 import { UsersModule } from './users/users.module';
@@ -24,6 +25,7 @@ import { UsersModule } from './users/users.module';
       }),
       inject: [ConfigService],
     }),
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

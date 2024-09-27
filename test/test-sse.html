@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Test Server-Side Events</title>
+  </head>
+  <body>
+    <script>
+      const eventSource = new EventSource(
+        'http://localhost:3000/events/submit-form',
+      );
+      eventSource.onmessage = ({ data }) => {
+        console.log('Data:', data);
+      };
+    </script>
+  </body>
+</html>

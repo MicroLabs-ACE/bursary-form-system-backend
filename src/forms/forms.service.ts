@@ -6,7 +6,9 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { of } from 'rxjs';
 import formTemplates from 'src/data/form-templates.json';
+import { EventsService } from 'src/events/events.service';
 import { FormObject } from 'src/schemas/form-object.schema';
 import { FormTemplate } from 'src/schemas/form-template.schema';
 import { UserMeta } from 'src/schemas/user-meta.schema';
@@ -15,6 +17,7 @@ import { z, ZodType } from 'zod';
 @Injectable()
 export class FormsService implements OnModuleInit {
   constructor(
+    private readonly eventService: EventsService,
     @InjectModel(FormTemplate.name)
     private formTemplateModel: Model<FormTemplate>,
     @InjectModel(FormObject.name) private formObjectModel: Model<FormObject>,
@@ -88,7 +91,7 @@ export class FormsService implements OnModuleInit {
         name: templateName,
       }),
     ]);
-
+    this.eventService.registerEvent('submit-form', of('Danger'));
     await this.formObjectModel.create({
       userMeta: foundUserMeta,
       formTemplate: foundFormTemplate,
