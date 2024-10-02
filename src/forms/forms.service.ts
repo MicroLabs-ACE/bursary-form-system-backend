@@ -28,7 +28,7 @@ export class FormsService implements OnModuleInit {
     try {
       await this.formTemplateModel.create(formTemplates);
     } catch (error) {
-      console.error(error);
+      console.log('Form templates already created.');
     }
   }
 
