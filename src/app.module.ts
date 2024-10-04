@@ -8,6 +8,7 @@ import { EventsModule } from './events/events.module';
 import { FormsModule } from './forms/forms.module';
 import { MailingModule } from './mailing/mailing.module';
 import { UsersModule } from './users/users.module';
+import { FinManagementProviderModule } from './fin-management-provider/fin-management-provider.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { UsersModule } from './users/users.module';
       inject: [ConfigService],
     }),
     EventsModule,
+    FinManagementProviderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
