@@ -21,6 +21,16 @@ export class FormsController {
   constructor(private readonly formsService: FormsService) {}
 
   @ApiOperation({ summary: 'Get form templates' })
+  @ApiResponse({ status: 200, description: 'Form templates retrieved' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @Get()
+  @Roles([Role.USER])
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async getFormTemplates() {
+    return await this.formsService.getFormTemplates();
+  }
+
+  @ApiOperation({ summary: 'Get form template' })
   @ApiParam({
     name: 'templateName',
     description: 'Name of form template',
@@ -31,8 +41,8 @@ export class FormsController {
   @Get('/:templateName')
   @Roles([Role.USER])
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async getFormTemplates(@Param('templateName') templateName: string | null) {
-    return await this.formsService.getFormTemplates(templateName);
+  async getFormTemplate(@Param('templateName') templateName: string | null) {
+    return await this.formsService.getFormTemplate(templateName);
   }
 
   @ApiOperation({ summary: 'Process a form' })

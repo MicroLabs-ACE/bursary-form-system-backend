@@ -32,8 +32,12 @@ export class FormsService implements OnModuleInit {
     }
   }
 
-  async getFormTemplates(templateName: string | null) {
+  async getFormTemplate(templateName: string | null) {
     return this.formTemplateModel.find({ name: templateName }).exec();
+  }
+
+  async getFormTemplates() {
+    return this.formTemplateModel.find().exec();
   }
 
   async processForm(email: string, templateName: string, formData: object) {
