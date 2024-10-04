@@ -6,7 +6,13 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({ credentials: true });
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'https://bursary-form-system-frontend.onrender.com',
+    ],
+    credentials: true,
+  });
   const configService = app.get(ConfigService);
   const cookieSecret = configService.get<string>('COOKIE_SECRET');
   app.use(cookieParser(cookieSecret));
