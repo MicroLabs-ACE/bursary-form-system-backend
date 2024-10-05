@@ -45,8 +45,16 @@ export class AuthController {
   ) {
     const { user } = request;
     const { accessToken, refreshToken } = await this.authService.login(user);
-    response.cookie('access_token', accessToken);
-    response.cookie('refresh_token', refreshToken);
+    response.cookie('x-access-token', accessToken, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 100 * 60 * 60 * 7,
+    });
+    response.cookie('x-refresh-token', refreshToken, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 100 * 60 * 60 * 7,
+    });
     response.status(200).send();
   }
 
@@ -69,8 +77,8 @@ export class AuthController {
     const { email, token } = verifyOtpDto;
     const user = await this.authService.verifyOtp(email, token);
     const { accessToken, refreshToken } = await this.authService.login(user);
-    response.cookie('access_token', accessToken);
-    response.cookie('refresh_token', refreshToken);
+    response.cookie('x-access-token', accessToken);
+    response.cookie('x-refresh-token', refreshToken);
     response.status(200).json({ message: 'Logged in successfully' });
   }
 

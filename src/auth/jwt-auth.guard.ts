@@ -55,7 +55,7 @@ export class JwtAuthGuard implements CanActivate {
 
       const refreshedAccessToken =
         await this.authService.generateAccessToken(payload);
-      response.cookie('access_token', refreshedAccessToken);
+      response.cookie('x-access-token', refreshedAccessToken);
       const refreshedRefreshToken =
         await this.authService.generateRefreshToken(payload);
       response.cookie('refresh_token', refreshedRefreshToken);
@@ -86,8 +86,8 @@ export class JwtAuthGuard implements CanActivate {
 
   private async extractTokensFromCookie(request: Request) {
     return {
-      accessToken: request.cookies['access_token'],
-      refreshToken: request.cookies['refresh_token'],
+      accessToken: request.cookies['x-access-token'],
+      refreshToken: request.cookies['x-refresh-token'],
     };
   }
 }
