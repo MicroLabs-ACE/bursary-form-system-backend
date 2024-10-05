@@ -14,8 +14,8 @@ async function bootstrap() {
     credentials: true,
   });
   const configService = app.get(ConfigService);
-  const cookieSecret = configService.get<string>('COOKIE_SECRET');
-  app.use(cookieParser(cookieSecret));
+  // const cookieSecret = configService.get<string>('COOKIE_SECRET');
+  app.use(cookieParser());
   const config = new DocumentBuilder()
     .setTitle('Bursary Form Service')
     .setDescription('The Bursary Forms Service API')
