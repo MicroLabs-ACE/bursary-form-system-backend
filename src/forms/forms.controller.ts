@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import {
-  ApiCookieAuth,
+  ApiBearerAuth,
   ApiOperation,
   ApiParam,
   ApiResponse,
@@ -15,7 +15,7 @@ import { Role, UserDto } from 'src/users/dto/user.dto';
 import { FormsService } from './forms.service';
 
 @ApiTags('Forms')
-@ApiCookieAuth()
+@ApiBearerAuth()
 @Controller('forms')
 export class FormsController {
   constructor(private readonly formsService: FormsService) {}

@@ -1,7 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -14,8 +13,6 @@ async function bootstrap() {
     credentials: true,
   });
   const configService = app.get(ConfigService);
-  // const cookieSecret = configService.get<string>('COOKIE_SECRET');
-  app.use(cookieParser());
   const config = new DocumentBuilder()
     .setTitle('Bursary Form Service')
     .setDescription('The Bursary Forms Service API')

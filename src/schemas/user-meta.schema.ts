@@ -10,6 +10,9 @@ export class UserMeta {
 
   @Prop()
   secret?: string;
+
+  @Prop({ required: true, default: false })
+  isLoggedIn!: boolean;
 }
 
 export const UserMetaSchema = SchemaFactory.createForClass(UserMeta);

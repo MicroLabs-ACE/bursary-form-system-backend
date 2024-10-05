@@ -33,7 +33,7 @@ export class JwtAuthGuard implements CanActivate {
     const response = context.switchToHttp().getResponse();
 
     const { accessToken, refreshToken } =
-      await this.extractTokensFromCookie(request);
+      await this.extractTokensFromHeaders(request);
     if (!accessToken || !refreshToken) {
       throw new UnauthorizedException('Token(s) not found');
     }
@@ -84,10 +84,13 @@ export class JwtAuthGuard implements CanActivate {
     }
   }
 
-  private async extractTokensFromCookie(request: Request) {
+  private async extractTokensFromHeaders(request: Request) {
+    const authorizationHeader = request.header('authorization') as string;
+    const refreshTokenHeader = request.header('refresh-token') as string;
+
     return {
-      accessToken: request.cookies['x-access-token'],
-      refreshToken: request.cookies['x-refresh-token'],
+      accessToken: authorizationHeader.replace('Bearer ', ''),
+      refreshToken: refreshTokenHeader.replace('Bearer ', ''),
     };
   }
 }
