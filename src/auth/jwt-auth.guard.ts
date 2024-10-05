@@ -55,10 +55,10 @@ export class JwtAuthGuard implements CanActivate {
 
       const refreshedAccessToken =
         await this.authService.generateAccessToken(payload);
-      response.cookie('x-access-token', refreshedAccessToken);
+      response.setHeader('Authorization', `Bearer ${refreshedAccessToken}`);
       const refreshedRefreshToken =
         await this.authService.generateRefreshToken(payload);
-      response.cookie('refresh_token', refreshedRefreshToken);
+      response.setHeader('Refresh-Token', `Bearer ${refreshedRefreshToken}`);
     }
     request.user = await this.authService.getUser(payload.email);
     return true;
