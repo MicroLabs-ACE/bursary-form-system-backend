@@ -7,11 +7,11 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { of } from 'rxjs';
-import formTemplates from 'src/data/form-templates.json';
 import { EventsService } from 'src/events/events.service';
 import { FormObject } from 'src/schemas/form-object.schema';
 import { FormTemplate } from 'src/schemas/form-template.schema';
 import { UserMeta } from 'src/schemas/user-meta.schema';
+import formTemplates from 'src/templates/form-templates.json';
 import { z, ZodType } from 'zod';
 
 @Injectable()

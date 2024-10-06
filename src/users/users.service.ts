@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import userData from 'src/data/user-data.json';
+import userData from 'src/templates/user-data.json';
 import { userDto, UserDto } from './dto/user.dto';
 
 @Injectable()
