@@ -8,6 +8,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { of } from 'rxjs';
 import { EventsService } from 'src/events/events.service';
+import { Query } from 'src/fin-management-provider/dto/query.dto';
+import { FinManagementProviderService } from 'src/fin-management-provider/fin-management-provider.service';
 import { FormObject } from 'src/schemas/form-object.schema';
 import { FormTemplate } from 'src/schemas/form-template.schema';
 import { UserMeta } from 'src/schemas/user-meta.schema';
@@ -18,6 +20,7 @@ import { z, ZodType } from 'zod';
 export class FormsService implements OnModuleInit {
   constructor(
     private readonly eventService: EventsService,
+    private readonly finManagementProviderService: FinManagementProviderService,
     @InjectModel(FormTemplate.name)
     private formTemplateModel: Model<FormTemplate>,
     @InjectModel(FormObject.name) private formObjectModel: Model<FormObject>,
@@ -40,6 +43,10 @@ export class FormsService implements OnModuleInit {
     return this.formTemplateModel.find().exec();
   }
 
+  async getFormOptions(query: Query) {
+    return await this.finManagementProviderService.getData(query);
+  }
+
   async processForm(email: string, templateName: string, formData: object) {
     const formTemplate = await this.formTemplateModel
       .findOne({
@@ -51,7 +58,10 @@ export class FormsService implements OnModuleInit {
       throw new NotFoundException('Template does not exist');
     }
 
-    const formValidator = await this.generateFormValidator(formTemplate.format);
+    const formValidator = await this.generateFormValidator(
+      templateName,
+      formTemplate.format,
+    );
     const parseResult = await formValidator.safeParseAsync(formData);
     if (parseResult.success) {
       await this.submitForm(email, templateName, formData);
@@ -60,18 +70,40 @@ export class FormsService implements OnModuleInit {
     }
   }
 
-  private async generateFormValidator(formFormat: object) {
+  private async generateFormValidator(
+    formTemplate: string,
+    formFormat: object,
+  ) {
     let formValidator = z.object({});
     let fieldValidator: ZodType;
 
     for (const [fieldName, fieldType] of Object(formFormat).entries()) {
-      switch (fieldType) {
+      let _fieldType = fieldType;
+      let fieldOptions: any;
+      if (fieldType.startsWith('#')) {
+        _fieldType = fieldType.replace('#', '');
+      }
+
+      if (_fieldType === 'Options') {
+        const query: Query = { name: fieldName };
+        if (fieldName === 'objectCode') {
+          query['formTemplate'] = formTemplate;
+        }
+
+        fieldOptions = await this.getFormOptions(query);
+      }
+
+      switch (_fieldType) {
         case 'Number':
           fieldValidator = z.number().nonnegative();
           break;
 
         case 'String':
           fieldValidator = z.string();
+          break;
+
+        case 'Options':
+          fieldValidator = z.enum(fieldOptions);
           break;
 
         default:

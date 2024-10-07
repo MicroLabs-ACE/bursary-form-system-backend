@@ -3,28 +3,35 @@
     "name": "cashAdvance",
     "displayName": "Cash Advance",
     "description": "A form used to get a cash advance, usually large sums of money.",
-    "rules": ["Cannot be less than 50K", "Must be repaid in 50 days"],
+    "rules": [
+      "Cash advance cannot be obtained while an advance previously taken by applicant or any other person in the applicant's department is yet to be cleared",
+      "Cash advance can only be utilised for the purpose for which it was obtained.",
+      "Cash advance is to collected through e-payment to the bank from the cash office.",
+      "Unspent balance of the cash advance must be paid into the cash office and the official receipt obtained by the applicant."
+    ],
     "format": {
       "amount": "Number",
       "bankName": "String",
       "sortCode": "String",
-      "objectCode": "String",
+      "objectCode": "#Options-ObjectCode",
       "purposeOfAdvance": "String",
-      "callCentre": "String"
+      "callCentre": "#Options-CallCentre"
     }
   },
   {
     "name": "imprest",
     "displayName": "Imprest",
     "description": "A form used to get imprest, usually money in small amounts.",
-    "rules": ["Cannot be greater than 50K", "Must be repaid in 20 days"],
+    "rules": [
+      "The amount requested per imprest form must be less than 100K total and 10K per item."
+    ],
     "format": {
       "amount": "Number",
       "bankName": "String",
       "sortCode": "String",
-      "objectCode": "String",
+      "objectCode": "#Options",
       "purposeOfAdvance": "String",
-      "callCentre": "String"
+      "callCentre": "#Options"
     }
   }
 ]

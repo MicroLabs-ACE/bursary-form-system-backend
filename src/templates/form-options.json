@@ -1,0 +1,7 @@
+{
+  "ObjectCode": {
+    "cashAdvance": ["Travel", "Training Cost", "Equipment"],
+    "imprest": ["Transport", "Stationery", "Miscellaneous"]
+  },
+  "CallCentre": ["1001", "2002", "3003"]
+}
