@@ -10,12 +10,26 @@
       "Unspent balance of the cash advance must be paid into the cash office and the official receipt obtained by the applicant."
     ],
     "format": {
-      "amount": "Number",
-      "bankName": "String",
-      "sortCode": "String",
-      "objectCode": "#Options-ObjectCode",
-      "purposeOfAdvance": "String",
-      "callCentre": "#Options-CallCentre"
+      "amount": {
+        "type": "Number"
+      },
+      "bankName": {
+        "type": "String"
+      },
+      "sortCode": {
+        "type": "String"
+      },
+      "objectCode": {
+        "type": "List",
+        "fromAPI": true
+      },
+      "purposeOfAdvance": {
+        "type": "String"
+      },
+      "callCentre": {
+        "type": "List",
+        "fromAPI": true
+      }
     }
   },
   {
@@ -26,12 +40,26 @@
       "The amount requested per imprest form must be less than 100K total and 10K per item."
     ],
     "format": {
-      "amount": "Number",
-      "bankName": "String",
-      "sortCode": "String",
-      "objectCode": "#Options",
-      "purposeOfAdvance": "String",
-      "callCentre": "#Options"
+      "amount": {
+        "type": "Number"
+      },
+      "bankName": {
+        "type": "String"
+      },
+      "sortCode": {
+        "type": "String"
+      },
+      "objectCode": {
+        "type": "List",
+        "fromAPI": true
+      },
+      "purposeOfAdvance": {
+        "type": "String"
+      },
+      "callCentre": {
+        "type": "List",
+        "fromAPI": true
+      }
     }
   }
 ]

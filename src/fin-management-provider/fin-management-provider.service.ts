@@ -1,16 +1,16 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { Query } from 'src/forms/dto/query.dto';
 import formOptions from 'src/templates/form-options.json';
+import { QueryDto } from './dto/query.dto';
 
 @Injectable()
 export class FinManagementProviderService {
   constructor(private httpService: HttpService) {}
 
-  async getData(query: Query) {
-    const { name } = query;
+  async getData(queryDto: QueryDto) {
+    const { name } = queryDto;
     if (name === 'objectCode') {
-      return this.getObjectCodes(query!.formTemplate);
+      return this.getObjectCodes(queryDto!.formTemplate);
     } else if (name === 'callCentre') {
       return this.getCallCentres();
     }

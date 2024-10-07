@@ -1,4 +1,4 @@
-export interface Query {
+export interface QueryDto {
   name: string;
   [key: string]: any;
 }

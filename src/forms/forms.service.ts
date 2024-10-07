@@ -8,13 +8,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { of } from 'rxjs';
 import { EventsService } from 'src/events/events.service';
+import { QueryDto } from 'src/fin-management-provider/dto/query.dto';
 import { FinManagementProviderService } from 'src/fin-management-provider/fin-management-provider.service';
 import { FormObject } from 'src/schemas/form-object.schema';
 import { FormTemplate } from 'src/schemas/form-template.schema';
 import { UserMeta } from 'src/schemas/user-meta.schema';
 import formTemplates from 'src/templates/form-templates.json';
 import { z, ZodType } from 'zod';
-import { Query } from './dto/query.dto';
 
 @Injectable()
 export class FormsService implements OnModuleInit {
@@ -77,23 +77,21 @@ export class FormsService implements OnModuleInit {
     let formValidator = z.object({});
     let fieldValidator: ZodType;
 
-    for (const [fieldName, fieldType] of Object(formFormat).entries()) {
-      let _fieldType = fieldType;
+    for (const [fieldName, fieldProperties] of Object(formFormat).entries()) {
+      const { type: fieldType } = fieldProperties;
+
       let fieldOptions: any;
-      if (fieldType.startsWith('#')) {
-        _fieldType = fieldType.replace('#', '');
-      }
-
-      if (_fieldType === 'Options') {
-        const query: Query = { name: fieldName };
-        if (fieldName === 'objectCode') {
-          query['formTemplate'] = formTemplate;
+      if (fieldType === 'List') {
+        const { options } = fieldProperties;
+        if (options) {
+          fieldOptions = options;
+        } else {
+          const queryDto: QueryDto = { name: formTemplate };
+          fieldOptions = await this.finManagementProviderService.getData(queryDto);
         }
-
-        fieldOptions = await this.getFormOptions(query);
       }
 
-      switch (_fieldType) {
+      switch (fieldType) {
         case 'Number':
           fieldValidator = z.number().nonnegative();
           break;
@@ -102,7 +100,7 @@ export class FormsService implements OnModuleInit {
           fieldValidator = z.string();
           break;
 
-        case 'Options':
+        case 'List':
           fieldValidator = z.enum(fieldOptions);
           break;
 
