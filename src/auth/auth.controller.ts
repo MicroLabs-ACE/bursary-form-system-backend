@@ -17,6 +17,7 @@ import {
 import { Request, Response } from 'express';
 import { Role, UserDto } from 'src/users/dto/user.dto';
 import { AuthService } from './auth.service';
+import { TokensDto } from './dto/tokens.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { GoogleOauth2Guard } from './google-oauth2.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
@@ -36,7 +37,11 @@ export class AuthController {
   async googleOauth2() {}
 
   @ApiOperation({ summary: 'Google OAuth2 callback' })
-  @ApiResponse({ status: 200, description: 'Login successful' })
+  @ApiResponse({
+    status: 200,
+    description: 'Login successful',
+    type: [TokensDto],
+  })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Get('google/callback')
   @UseGuards(GoogleOauth2Guard)
@@ -46,9 +51,8 @@ export class AuthController {
   ) {
     const { user } = request;
     const { accessToken, refreshToken } = await this.authService.login(user);
-    response.setHeader('Authorization', `Bearer ${accessToken}`);
-    response.setHeader('Refresh-Token', `Bearer ${refreshToken}`);
-    response.status(200).json();
+    const tokensDto = { accessToken, refreshToken };
+    response.status(200).json(tokensDto);
   }
 
   @ApiOperation({ summary: 'Request OTP' })
@@ -77,7 +81,11 @@ export class AuthController {
       required: ['email', 'token'],
     },
   })
-  @ApiResponse({ status: 200, description: 'OTP verified successfully' })
+  @ApiResponse({
+    status: 200,
+    description: 'OTP verified successfully',
+    type: [TokensDto],
+  })
   @ApiResponse({ status: 400, description: 'Invalid OTP' })
   @Post('otp/verification')
   async verifyOtp(
@@ -87,9 +95,8 @@ export class AuthController {
     const { email, token } = verifyOtpDto;
     const user = await this.authService.verifyOtp(email, token);
     const { accessToken, refreshToken } = await this.authService.login(user);
-    response.setHeader('Authorization', `Bearer ${accessToken}`);
-    response.setHeader('Refresh-Token', `Bearer ${refreshToken}`);
-    response.status(200).json();
+    const tokensDto = { accessToken, refreshToken };
+    response.status(200).json(tokensDto);
   }
 
   @ApiOperation({ summary: 'User info' })

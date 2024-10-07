@@ -82,16 +82,13 @@ export class JwtAuthGuard implements CanActivate {
   }
 
   private async extractTokensFromHeaders(request: Request) {
-    const authorizationHeader = request.header('authorization');
-    const refreshTokenHeader = request.header('refresh-token');
+    const accessToken = request.header('x-acess-token');
+    const refreshToken = request.header('x-refresh-token');
 
-    if (!authorizationHeader || !refreshTokenHeader) {
+    if (!accessToken || !refreshToken) {
       throw new UnauthorizedException('Token(s) not found');
     }
 
-    return {
-      accessToken: authorizationHeader.replace('Bearer ', ''),
-      refreshToken: refreshTokenHeader.replace('Bearer ', ''),
-    };
+    return { accessToken, refreshToken };
   }
 }
