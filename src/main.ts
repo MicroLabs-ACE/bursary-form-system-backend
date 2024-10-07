@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({ exposedHeaders: ['Authorization', 'Refresh-Token'] });
+  app.enableCors();
   const configService = app.get(ConfigService);
   const config = new DocumentBuilder()
     .setTitle('Bursary Form Service')
