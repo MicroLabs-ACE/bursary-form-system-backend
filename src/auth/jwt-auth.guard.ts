@@ -34,9 +34,6 @@ export class JwtAuthGuard implements CanActivate {
 
     const { accessToken, refreshToken } =
       await this.extractTokensFromHeaders(request);
-    if (!accessToken || !refreshToken) {
-      throw new UnauthorizedException('Token(s) not found');
-    }
 
     const { payload, isExpired } = await this.verifyToken(
       accessToken,
@@ -85,8 +82,12 @@ export class JwtAuthGuard implements CanActivate {
   }
 
   private async extractTokensFromHeaders(request: Request) {
-    const authorizationHeader = request.header('authorization') as string;
-    const refreshTokenHeader = request.header('refresh-token') as string;
+    const authorizationHeader = request.header('authorization');
+    const refreshTokenHeader = request.header('refresh-token');
+
+    if (!authorizationHeader || !refreshTokenHeader) {
+      throw new UnauthorizedException('Token(s) not found');
+    }
 
     return {
       accessToken: authorizationHeader.replace('Bearer ', ''),
