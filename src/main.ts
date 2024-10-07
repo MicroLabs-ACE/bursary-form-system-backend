@@ -6,11 +6,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'https://bursary-form-system-frontend.onrender.com',
-    ],
-    credentials: true,
+    origin: ['localhost', 'https://bursary-form-system-frontend.onrender.com'],
   });
   const configService = app.get(ConfigService);
   const config = new DocumentBuilder()

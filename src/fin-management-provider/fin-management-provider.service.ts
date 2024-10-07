@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { Query } from 'src/forms/dto/query.dto';
 import formOptions from 'src/templates/form-options.json';
-import { Query } from './dto/query.dto';
 
 @Injectable()
 export class FinManagementProviderService {

@@ -61,7 +61,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Verify OTP' })
   @ApiResponse({ status: 200, description: 'OTP verified successfully' })
   @ApiResponse({ status: 400, description: 'Invalid OTP' })
-  @Post('otp/verify')
+  @Post('otp/verification')
   async verifyOtp(
     @Body() verifyOtpDto: VerifyOtpDto,
     @Res() response: Response,

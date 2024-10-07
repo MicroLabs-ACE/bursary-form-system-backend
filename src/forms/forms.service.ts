@@ -8,13 +8,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { of } from 'rxjs';
 import { EventsService } from 'src/events/events.service';
-import { Query } from 'src/fin-management-provider/dto/query.dto';
 import { FinManagementProviderService } from 'src/fin-management-provider/fin-management-provider.service';
 import { FormObject } from 'src/schemas/form-object.schema';
 import { FormTemplate } from 'src/schemas/form-template.schema';
 import { UserMeta } from 'src/schemas/user-meta.schema';
 import formTemplates from 'src/templates/form-templates.json';
 import { z, ZodType } from 'zod';
+import { Query } from './dto/query.dto';
 
 @Injectable()
 export class FormsService implements OnModuleInit {
