@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiBody,
   ApiOperation,
   ApiResponse,
   ApiTags,
@@ -51,6 +52,14 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Request OTP' })
+  @ApiBody({
+    schema: {
+      properties: {
+        email: { type: 'string', example: 'victoramomodu@gmail.com' },
+      },
+      required: ['email'],
+    },
+  })
   @ApiResponse({ status: 200, description: 'OTP sent successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
   @Post('otp/request')
@@ -59,6 +68,15 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Verify OTP' })
+  @ApiBody({
+    schema: {
+      properties: {
+        email: { type: 'string', example: 'victoramomodu@gmail.com' },
+        token: { type: 'string', example: '298128' },
+      },
+      required: ['email', 'token'],
+    },
+  })
   @ApiResponse({ status: 200, description: 'OTP verified successfully' })
   @ApiResponse({ status: 400, description: 'Invalid OTP' })
   @Post('otp/verification')
