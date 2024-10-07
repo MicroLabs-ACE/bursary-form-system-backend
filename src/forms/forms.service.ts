@@ -43,8 +43,8 @@ export class FormsService implements OnModuleInit {
     return this.formTemplateModel.find().exec();
   }
 
-  async getFormOptions(query: Query) {
-    return await this.finManagementProviderService.getData(query);
+  async getFormOptions(queryDto: QueryDto) {
+    return await this.finManagementProviderService.getData(queryDto);
   }
 
   async processForm(email: string, templateName: string, formData: object) {
@@ -87,7 +87,8 @@ export class FormsService implements OnModuleInit {
           fieldOptions = options;
         } else {
           const queryDto: QueryDto = { name: formTemplate };
-          fieldOptions = await this.finManagementProviderService.getData(queryDto);
+          fieldOptions =
+            await this.finManagementProviderService.getData(queryDto);
         }
       }
 
