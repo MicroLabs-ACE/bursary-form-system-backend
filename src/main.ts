@@ -8,8 +8,9 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000',
-      'https://bursary-form-system-backend.onrender.com',
+      'https://bursary-form-system-frontend.onrender.com',
     ],
+    credentials: true,
   });
   const configService = app.get(ConfigService);
   const config = new DocumentBuilder()
