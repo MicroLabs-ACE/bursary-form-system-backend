@@ -7,23 +7,12 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
-import { Role, UserDto } from 'src/users/dto/user.dto';
 import { AuthService } from './auth.service';
 import { TokensDto } from './dto/tokens.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { GoogleOauth2Guard } from './google-oauth2.guard';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { Roles } from './roles.decorator';
-import { RolesGuard } from './roles.guard';
-import { User } from './user.decorator';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -97,16 +86,5 @@ export class AuthController {
     const { accessToken, refreshToken } = await this.authService.login(user);
     const tokensDto = { accessToken, refreshToken };
     response.status(200).json(tokensDto);
-  }
-
-  @ApiOperation({ summary: 'User info' })
-  @ApiResponse({ status: 200, description: 'User info displayed' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiBearerAuth()
-  @Get('user')
-  @Roles([Role.USER])
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  async user(@User() user: UserDto) {
-    return user;
   }
 }
