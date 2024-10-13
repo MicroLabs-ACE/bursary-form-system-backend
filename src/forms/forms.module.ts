@@ -9,6 +9,7 @@ import {
   FormTemplateSchema,
 } from 'src/schemas/form-template.schema';
 import { UserMeta, UserMetaSchema } from 'src/schemas/user-meta.schema';
+import { UsersModule } from 'src/users/users.module';
 import { FormsController } from './forms.controller';
 import { FormsService } from './forms.service';
 
@@ -16,6 +17,7 @@ import { FormsService } from './forms.service';
   imports: [
     AuthModule,
     EventsModule,
+    UsersModule,
     FinManagementProviderModule,
     MongooseModule.forFeature([
       { name: FormTemplate.name, schema: FormTemplateSchema },

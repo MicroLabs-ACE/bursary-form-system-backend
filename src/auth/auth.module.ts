@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MailingModule } from 'src/mailing/mailing.module';
@@ -14,7 +14,7 @@ import { RolesGuard } from './roles.guard';
   imports: [
     MailingModule,
     JwtModule.register({ global: true }),
-    UsersModule,
+    forwardRef(() => UsersModule),
     MongooseModule.forFeature([
       { name: UserMeta.name, schema: UserMetaSchema },
     ]),
