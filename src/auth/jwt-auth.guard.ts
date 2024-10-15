@@ -82,7 +82,7 @@ export class JwtAuthGuard implements CanActivate {
   }
 
   private async extractTokensFromHeaders(request: Request) {
-    const accessToken = request.header('x-acess-token');
+    const accessToken = request.header('x-access-token');
     const refreshToken = request.header('x-refresh-token');
 
     if (!accessToken || !refreshToken) {
