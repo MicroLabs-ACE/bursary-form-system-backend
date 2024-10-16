@@ -57,7 +57,7 @@ export class AuthController {
   @ApiResponse({ status: 400, description: 'Bad request' })
   @Post('otp/request')
   async requestOtp(@Body('email') email: string) {
-    await this.authService.requestOtp(email);
+    return await this.authService.requestOtp(email);
   }
 
   @ApiOperation({ summary: 'Verify OTP' })

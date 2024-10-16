@@ -102,6 +102,9 @@ export class AuthService {
       this.mailingService.sendEmail(mailDto),
       this.userMetaModel.updateOne({ email }, { secret: otpDto.secret }),
     ]);
+
+    // TODO: Remove returning of tokens
+    return { token: otpDto.token };
   }
 
   async verifyOtp(email: string, token: string) {
