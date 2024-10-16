@@ -62,11 +62,14 @@ export class FormsService implements OnModuleInit {
       templateName,
       formTemplate.format,
     );
+
     const parseResult = await formValidator.safeParseAsync(formData);
     if (parseResult.success) {
       await this.submitForm(email, templateName, formData);
     } else {
-      throw new BadRequestException('Invalid form format');
+      throw new BadRequestException(
+        `Invalid form format: ${parseResult.error}`,
+      );
     }
   }
 
